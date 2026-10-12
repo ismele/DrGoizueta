@@ -6,12 +6,12 @@ const T = {
 	es: { pick: 'Elija primero una fecha.', closed: 'La clínica está cerrada ese día.', none: 'No quedan horarios libres ese día.', loading: 'Cargando horarios…',
 		free: 'libre', requested: 'solicitado', scheduled: 'agendado', past: 'no disponible',
 		sending: 'Enviando…', ok: 'Solicitud recibida para las {t} del {d}. Queda pendiente hasta que la clínica la confirme.',
-		taken: 'Ese horario acaba de ocuparse. Elija otro, por favor.', fail: 'No se pudo enviar. Revise su conexión o escríbanos por WhatsApp.',
+		taken: 'Ese horario acaba de ocuparse. Elija otro, por favor.', denied: 'La agenda en línea no está disponible ahora mismo. Escríbanos por WhatsApp para reservar.', loadErr: 'No se pudieron cargar los horarios. Escríbanos por WhatsApp para reservar.', fail: 'No se pudo enviar. Revise su conexión o escríbanos por WhatsApp.',
 		wa: 'Avisar también por WhatsApp', waMsg: 'Hola, solicité una cita en la web para las {t} del {d}. Mi nombre es {n}.' },
 	en: { pick: 'Choose a date first.', closed: 'The clinic is closed that day.', none: 'No free times left that day.', loading: 'Loading times…',
 		free: 'free', requested: 'requested', scheduled: 'booked', past: 'unavailable',
 		sending: 'Sending…', ok: 'Request received for {t} on {d}. It stays pending until the clinic confirms it.',
-		taken: 'That time was just taken. Please choose another.', fail: 'Could not send. Check your connection or message us on WhatsApp.',
+		taken: 'That time was just taken. Please choose another.', denied: 'Online booking is not available right now. Please message us on WhatsApp to book.', loadErr: 'Could not load the available times. Please message us on WhatsApp to book.', fail: 'Could not send. Check your connection or message us on WhatsApp.',
 		wa: 'Also notify us on WhatsApp', waMsg: 'Hello, I requested an appointment on the website for {t} on {d}. My name is {n}.' }
 };
 const t = () => T[window.getLang ? window.getLang() : 'es'];
@@ -20,7 +20,7 @@ const niceDate = (d) => d.split('-').reverse().join('/');
 
 const dateEl = document.querySelector('#f-date'), box = document.querySelector('#slots');
 const field = document.querySelector('#slotField'), msg = document.querySelector('#formMsg');
-let unsub = null, taken = new Map(), picked = null, ready = false, busy = false;
+let unsub = null, taken = new Map(), picked = null, ready = false, busy = false, loadErr = false;
 
 function render() {
 	box.textContent = '';
@@ -29,6 +29,7 @@ function render() {
 	if (!date) return hint(t().pick);
 	const times = slotTimes(date);
 	if (!times.length) return hint(t().closed);
+	if (loadErr) return hint(t().loadErr);
 	if (!ready) return hint(t().loading);
 	if (picked && (taken.has(picked) || isPast(date, picked))) picked = null;
 	let free = 0;
@@ -51,14 +52,14 @@ function render() {
 
 function watch() {
 	if (unsub) { unsub(); unsub = null; }
-	taken = new Map(); picked = null; ready = false;
+	taken = new Map(); picked = null; ready = false; loadErr = false;
 	const date = dateEl.value;
 	render();
 	if (!date || !slotTimes(date).length) return;
 	unsub = onSnapshot(query(collection(db, 'slots'), where('date', '==', date)), (snap) => {
 		taken = new Map(snap.docs.map((d) => [d.data().time, d.data().status]));
-		ready = true; render();
-	}, () => { ready = true; render(); });
+		ready = true; loadErr = false; render();
+	}, (e) => { console.error('Could not load slots:', e && e.code, e); loadErr = true; render(); });
 }
 
 async function submit(data) {
@@ -85,7 +86,10 @@ async function submit(data) {
 		render();
 	} catch (e) {
 		msg.className = 'form__msg is-error';
-		msg.textContent = e && e.code === 'permission-denied' ? t().taken : t().fail;
+		const code = e && e.code;
+		console.error('Booking failed:', code, e);
+		// A real clash means the slot now shows as taken; otherwise the database refused the write (rules not published or misconfigured).
+		msg.textContent = code === 'permission-denied' ? (taken.has(time) ? t().taken : t().denied) : t().fail;
 	}
 	busy = false;
 }
