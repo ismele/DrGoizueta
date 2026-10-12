@@ -62,6 +62,7 @@
 			<nav class="nav" id="nav" aria-label="Principal">
 				<a href="#servicios" data-i18n="nav.services">Servicios</a>
 				<a href="#doctor" data-i18n="nav.doctor">El doctor</a>
+				<a href="#tarifas" data-i18n="nav.fees">Tarifas</a>
 				<a href="#citas" data-i18n="nav.appt">Citas</a>
 				<a href="#pagos" data-i18n="nav.pay">Pagos</a>
 				<a href="#ubicacion" data-i18n="nav.loc">Ubicación</a>
@@ -105,45 +106,90 @@
 			<div class="wrap"><strong data-i18n="em.t">¿Emergencia?</strong> <span data-i18n="em.p">Si su vida corre peligro, llame al <a href="tel:911">9-1-1</a> o acuda al hospital más cercano. Esta clínica no atiende emergencias.</span></div>
 		</div>
 
+		<!-- TRUST NUMBERS -->
+		<section class="stats" aria-label="La clínica en números">
+			<div class="wrap stats__in">
+				<div class="stat reveal" data-stat="years" hidden><b><span class="count" data-to="0">0</span>+</b><span data-i18n="st.years">años de experiencia</span></div>
+				<div class="stat reveal" data-stat="patients" hidden><b><span class="count" data-to="0">0</span>+</b><span data-i18n="st.patients">pacientes atendidos</span></div>
+				<div class="stat reveal"><b><span class="count" data-to="8">8</span></b><span data-i18n="st.services">servicios para toda la familia</span></div>
+				<div class="stat reveal"><b><span class="count" data-to="2">2</span></b><span data-i18n="st.langs">idiomas: español e inglés</span></div>
+				<div class="stat reveal"><b>24/7</b><span data-i18n="st.online">solicitud de citas en línea</span></div>
+			</div>
+		</section>
+
 		<!-- SERVICES -->
 		<section class="section" id="servicios">
 			<div class="wrap">
-				<h2 class="center" data-i18n="sv.h">Nuestros servicios</h2>
-				<img class="sv-art" src="assets/tablet/image-hero.png" alt="" data-i18n-alt="hero.alt" width="820" height="303" loading="lazy">
-				<p class="sub center" data-i18n="sv.p">Le atendemos con rapidez y profesionalidad, para que usted y los suyos se sientan seguros de la calidad de la atención.</p>
+				<h2 class="center reveal" data-i18n="sv.h">Nuestros servicios</h2>
+				<img class="sv-art reveal" src="assets/tablet/image-hero.png" alt="" data-i18n-alt="hero.alt" width="820" height="303" loading="lazy">
+				<p class="sub center reveal" data-i18n="sv.p">Le atendemos con rapidez y profesionalidad, para que usted y los suyos se sientan seguros de la calidad de la atención.</p>
 				<div class="svc">
-					<article class="svc__item"><svg class="ic ic--lg"><use href="#i-steth"/></svg><h3 data-i18n="sv.1.t">Consulta general</h3><p data-i18n="sv.1.p">Valoración, diagnóstico y tratamiento de adultos, con receta y seguimiento.</p></article>
-					<article class="svc__item"><svg class="ic ic--lg"><use href="#i-family"/></svg><h3 data-i18n="sv.2.t">Medicina familiar</h3><p data-i18n="sv.2.p">Atención de niños, adultos y adultos mayores en un mismo lugar.</p></article>
-					<article class="svc__item"><svg class="ic ic--lg"><use href="#i-heart"/></svg><h3 data-i18n="sv.3.t">Control de enfermedades crónicas</h3><p data-i18n="sv.3.p">Seguimiento de presión arterial, diabetes, colesterol y otras condiciones.</p></article>
-					<article class="svc__item"><svg class="ic ic--lg"><use href="#i-bandage"/></svg><h3 data-i18n="sv.4.t">Curaciones y procedimientos menores</h3><p data-i18n="sv.4.p">Curación de heridas, suturas, retiro de puntos y lavado de oídos.</p></article>
-					<article class="svc__item"><svg class="ic ic--lg"><use href="#i-syringe"/></svg><h3 data-i18n="sv.5.t">Inyectables y signos vitales</h3><p data-i18n="sv.5.p">Aplicación de medicamentos con receta, glicemia y toma de presión.</p></article>
-					<article class="svc__item"><svg class="ic ic--lg"><use href="#i-doc"/></svg><h3 data-i18n="sv.6.t">Dictámenes y certificados</h3><p data-i18n="sv.6.p">Dictamen médico para licencia, certificados de salud para trabajo o estudio.</p></article>
-					<article class="svc__item"><svg class="ic ic--lg"><use href="#i-video"/></svg><h3 data-i18n="sv.7.t">Teleconsulta</h3><p data-i18n="sv.7.p">Consulta por videollamada para seguimiento, resultados y dudas.</p></article>
-					<article class="svc__item"><svg class="ic ic--lg"><use href="#i-home"/></svg><h3 data-i18n="sv.8.t">Visita a domicilio</h3><p data-i18n="sv.8.p">Atención en casa u hotel para quienes no pueden trasladarse.</p></article>
+					<article class="svc__item reveal"><svg class="ic ic--lg"><use href="#i-steth"/></svg><h3 data-i18n="sv.1.t">Consulta general</h3><p data-i18n="sv.1.p">Valoración, diagnóstico y tratamiento de adultos, con receta y seguimiento.</p></article>
+					<article class="svc__item reveal"><svg class="ic ic--lg"><use href="#i-family"/></svg><h3 data-i18n="sv.2.t">Medicina familiar</h3><p data-i18n="sv.2.p">Atención de niños, adultos y adultos mayores en un mismo lugar.</p></article>
+					<article class="svc__item reveal"><svg class="ic ic--lg"><use href="#i-heart"/></svg><h3 data-i18n="sv.3.t">Control de enfermedades crónicas</h3><p data-i18n="sv.3.p">Seguimiento de presión arterial, diabetes, colesterol y otras condiciones.</p></article>
+					<article class="svc__item reveal"><svg class="ic ic--lg"><use href="#i-bandage"/></svg><h3 data-i18n="sv.4.t">Curaciones y procedimientos menores</h3><p data-i18n="sv.4.p">Curación de heridas, suturas, retiro de puntos y lavado de oídos.</p></article>
+					<article class="svc__item reveal"><svg class="ic ic--lg"><use href="#i-syringe"/></svg><h3 data-i18n="sv.5.t">Inyectables y signos vitales</h3><p data-i18n="sv.5.p">Aplicación de medicamentos con receta, glicemia y toma de presión.</p></article>
+					<article class="svc__item reveal"><svg class="ic ic--lg"><use href="#i-doc"/></svg><h3 data-i18n="sv.6.t">Dictámenes y certificados</h3><p data-i18n="sv.6.p">Dictamen médico para licencia, certificados de salud para trabajo o estudio.</p></article>
+					<article class="svc__item reveal"><svg class="ic ic--lg"><use href="#i-video"/></svg><h3 data-i18n="sv.7.t">Teleconsulta</h3><p data-i18n="sv.7.p">Consulta por videollamada para seguimiento, resultados y dudas.</p></article>
+					<article class="svc__item reveal"><svg class="ic ic--lg"><use href="#i-home"/></svg><h3 data-i18n="sv.8.t">Visita a domicilio</h3><p data-i18n="sv.8.p">Atención en casa u hotel para quienes no pueden trasladarse.</p></article>
 				</div>
 				<p class="note center" data-i18n="sv.note">¿No ve lo que necesita? Escríbanos y con gusto le orientamos.</p>
+			</div>
+		</section>
+
+		<!-- FEES -->
+		<section class="section" id="tarifas">
+			<div class="wrap">
+				<h2 class="center reveal" data-i18n="fee.h">Tarifas de consulta</h2>
+				<p class="sub center reveal" data-i18n="fee.p">Precios claros antes de venir. Elija un servicio y reserve su hora en un paso.</p>
+				<div class="fees">
+					<article class="fee reveal" data-service="1"><h3 data-i18n="sv.1.t">Consulta general</h3><p data-i18n="fee.1">Valoración completa, receta y seguimiento.</p><div class="fee__price" data-price="general"></div><button type="button" class="btn btn--ghost btn--block" data-book="1" data-i18n="fee.book">Reservar</button></article>
+					<article class="fee fee--main reveal" data-service="7"><span class="fee__tag" data-i18n="fee.tag">Desde casa</span><h3 data-i18n="sv.7.t">Teleconsulta</h3><p data-i18n="fee.7">Videollamada para seguimiento, resultados y dudas.</p><div class="fee__price" data-price="tele"></div><button type="button" class="btn btn--light btn--block" data-book="7" data-i18n="fee.book">Reservar</button></article>
+					<article class="fee reveal" data-service="8"><h3 data-i18n="sv.8.t">Visita a domicilio</h3><p data-i18n="fee.8">En su casa u hotel, en la zona de la clínica.</p><div class="fee__price" data-price="home"></div><button type="button" class="btn btn--ghost btn--block" data-book="8" data-i18n="fee.book">Reservar</button></article>
+					<article class="fee reveal" data-service="6"><h3 data-i18n="sv.6.t">Dictámenes y certificados</h3><p data-i18n="fee.6">Licencia de conducir, trabajo o estudio.</p><div class="fee__price" data-price="cert"></div><button type="button" class="btn btn--ghost btn--block" data-book="6" data-i18n="fee.book">Reservar</button></article>
+				</div>
 			</div>
 		</section>
 
 		<!-- DOCTOR -->
 		<section class="section section--tint" id="doctor">
 			<div class="wrap split">
-				<div class="gallery">
+				<div class="gallery reveal">
 					<img src="assets/desktop/image-woman-in-videocall.jpg" alt="" loading="lazy">
 					<img src="assets/desktop/image-women-videochatting.jpg" alt="" loading="lazy">
 					<img src="assets/desktop/image-men-in-meeting.jpg" alt="" loading="lazy">
 					<img src="assets/desktop/image-man-texting.jpg" alt="" loading="lazy">
 				</div>
-				<div >
+				<div class="reveal">
 					<p class="eyebrow" data-i18n="dr.eyebrow">Conozca a su médico</p>
 					<h2 data-i18n="dr.h">Un médico que escucha</h2>
-					<p data-i18n="dr.p1">El Dr. Goizueta es médico cubano con consulta en Costa Rica. Su forma de trabajar es sencilla: tiempo para escuchar, explicaciones claras y un plan que usted entienda.</p>
-					<p data-i18n="dr.p2">[Agregue aquí la formación, años de experiencia y especialidades del doctor.]</p>
-					<ul class="ticks">
-						<li data-i18n="dr.l1">Incorporado al Colegio de Médicos y Cirujanos de Costa Rica — código [MED-0000]</li>
-						<li data-i18n="dr.l2">Atención en español e inglés</li>
-						<li data-i18n="dr.l3">Recetas, referencias y comprobantes para su aseguradora</li>
-					</ul>
+					<div class="tabs" role="tablist" aria-label="Perfil del doctor">
+						<button type="button" role="tab" id="tb-ov" aria-controls="tp-ov" aria-selected="true" data-i18n="dr.t1">Perfil</button>
+						<button type="button" role="tab" id="tb-ed" aria-controls="tp-ed" aria-selected="false" tabindex="-1" data-i18n="dr.t2">Formación</button>
+						<button type="button" role="tab" id="tb-ex" aria-controls="tp-ex" aria-selected="false" tabindex="-1" data-i18n="dr.t3">Experiencia</button>
+					</div>
+					<div class="tabpanel" role="tabpanel" id="tp-ov" aria-labelledby="tb-ov">
+						<p data-i18n="dr.p1">El Dr. Goizueta es médico cubano con consulta en Costa Rica. Su forma de trabajar es sencilla: tiempo para escuchar, explicaciones claras y un plan que usted entienda.</p>
+						<ul class="ticks">
+							<li data-i18n="dr.l1">Incorporado al Colegio de Médicos y Cirujanos de Costa Rica — código [MED-0000]</li>
+							<li data-i18n="dr.l2">Atención en español e inglés</li>
+							<li data-i18n="dr.l3">Recetas, referencias y comprobantes para su aseguradora</li>
+						</ul>
+					</div>
+					<div class="tabpanel" role="tabpanel" id="tp-ed" aria-labelledby="tb-ed" hidden>
+						<ol class="timeline">
+							<li><b>[Año]</b><span data-i18n="dr.ed1">Doctor en Medicina, [Universidad de Ciencias Médicas, Cuba]</span></li>
+							<li><b>[Año]</b><span data-i18n="dr.ed2">Especialidad en [Medicina General Integral]</span></li>
+							<li><b>[Año]</b><span data-i18n="dr.ed3">Incorporación al Colegio de Médicos y Cirujanos de Costa Rica</span></li>
+						</ol>
+					</div>
+					<div class="tabpanel" role="tabpanel" id="tp-ex" aria-labelledby="tb-ex" hidden>
+						<ol class="timeline">
+							<li><b>[Año]–hoy</b><span data-i18n="dr.ex1">Consulta privada en [ciudad], Costa Rica</span></li>
+							<li><b>[Año]–[Año]</b><span data-i18n="dr.ex2">[Cargo] en [hospital o clínica]</span></li>
+							<li><b>[Año]–[Año]</b><span data-i18n="dr.ex3">Médico de familia en [Cuba / misión]</span></li>
+						</ol>
+					</div>
 				</div>
 			</div>
 		</section>
@@ -162,7 +208,7 @@
 					<p class="note" data-i18n="ap.cancel">Si no puede asistir, avísenos con al menos 24 horas para darle su espacio a otro paciente.</p>
 				</div>
 
-				<form class="form" id="apptForm" novalidate>
+				<form class="form reveal" id="apptForm" novalidate>
 					<div class="field">
 						<label for="f-name" data-i18n="f.name">Nombre completo</label>
 						<input id="f-name" name="name" type="text" autocomplete="name" required minlength="3">
@@ -228,9 +274,9 @@
 		<!-- PAYMENTS -->
 		<section class="section section--tint" id="pagos">
 			<div class="wrap">
-				<h2 class="center" data-i18n="pay.h">Formas de pago</h2>
-				<p class="sub center" data-i18n="pay.p">El pago se realiza el día de la consulta. Entregamos factura electrónica y comprobante para su aseguradora.</p>
-				<div class="wallet">
+				<h2 class="center reveal" data-i18n="pay.h">Formas de pago</h2>
+				<p class="sub center reveal" data-i18n="pay.p">El pago se realiza el día de la consulta. Entregamos factura electrónica y comprobante para su aseguradora.</p>
+				<div class="wallet reveal">
 					<div class="wallet__track" id="walletTrack" role="tablist" aria-label="Formas de pago">
 						<button type="button" class="pcard pcard--sinpe" role="tab" id="pt-sinpe" aria-controls="pp-sinpe" aria-selected="true" data-pay="sinpe">
 							<span class="pcard__top"><i class="pcard__chip"></i><svg class="ic"><use href="#i-phone"/></svg></span>
@@ -314,7 +360,7 @@
 						<a class="btn btn--ghost btn--sm" id="waze" target="_blank" rel="noopener" href="#">Waze</a>
 					</div>
 				</div>
-				<div class="hours">
+				<div class="hours reveal">
 					<h3><svg class="ic"><use href="#i-clock"/></svg> <span data-i18n="loc.hours">Horario de atención</span></h3>
 					<table id="hoursTable"><tbody></tbody></table>
 					<small class="muted" data-i18n="loc.tz">Hora de Costa Rica (GMT-6). Feriados: consulte por WhatsApp.</small>
@@ -326,7 +372,7 @@
 		<!-- FAQ -->
 		<section class="section section--tint" id="faq">
 			<div class="wrap wrap--narrow">
-				<h2 class="center" data-i18n="faq.h">Preguntas frecuentes</h2>
+				<h2 class="center reveal" data-i18n="faq.h">Preguntas frecuentes</h2>
 				<details class="faq"><summary data-i18n="faq.1q">¿Necesito cita o puedo llegar sin avisar?</summary><p data-i18n="faq.1a">Recomendamos reservar para no esperar. Si llega sin cita, le atendemos según disponibilidad.</p></details>
 				<details class="faq"><summary data-i18n="faq.2q">¿Atienden en inglés?</summary><p data-i18n="faq.2a">Sí. La consulta, las indicaciones y los documentos pueden darse en español o en inglés.</p></details>
 				<details class="faq"><summary data-i18n="faq.3q">¿Qué debo llevar a la consulta?</summary><p data-i18n="faq.3a">Cédula, DIMEX o pasaporte, la lista de medicamentos que toma y exámenes o recetas anteriores.</p></details>

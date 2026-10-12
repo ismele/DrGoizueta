@@ -8,7 +8,7 @@
 const EN = {
 	'skip': 'Skip to content',
 	'brand.sub': 'Medical clinic',
-	'nav.services': 'Services', 'nav.doctor': 'The doctor', 'nav.appt': 'Appointments', 'nav.pay': 'Payments', 'nav.loc': 'Location', 'nav.faq': 'FAQ',
+	'nav.services': 'Services', 'nav.doctor': 'The doctor', 'nav.fees': 'Fees', 'nav.appt': 'Appointments', 'nav.pay': 'Payments', 'nav.loc': 'Location', 'nav.faq': 'FAQ',
 	'cta.book': 'Book appointment', 'cta.wa': 'Message us on WhatsApp',
 	'hero.eyebrow': 'General and family medicine in Costa Rica',
 	'nx.h': 'Next available times', 'nx.live': 'Live', 'nx.all': 'See all times', 'nx.fb': 'Ask about availability on WhatsApp.',
@@ -27,7 +27,13 @@ const EN = {
 	'sv.7.t': 'Telemedicine', 'sv.7.p': 'Video consultation for follow-ups, results and questions.',
 	'sv.8.t': 'Home visits', 'sv.8.p': 'Care at your home or hotel when you cannot travel.',
 	'sv.note': 'Don\'t see what you need? Message us and we\'ll gladly guide you.',
-	'dr.eyebrow': 'Meet your doctor', 'dr.h': 'A doctor who listens',
+	'dr.eyebrow': 'Meet your doctor', 'dr.t1': 'Profile', 'dr.t2': 'Education', 'dr.t3': 'Experience',
+	'dr.ed1': 'Doctor of Medicine, [University of Medical Sciences, Cuba]', 'dr.ed2': 'Specialty in [Comprehensive General Medicine]', 'dr.ed3': 'Registered with the Costa Rican College of Physicians and Surgeons',
+	'dr.ex1': 'Private practice in [city], Costa Rica', 'dr.ex2': '[Role] at [hospital or clinic]', 'dr.ex3': 'Family doctor in [Cuba / mission]',
+	'st.years': 'years of experience', 'st.patients': 'patients seen', 'st.services': 'services for the whole family', 'st.langs': 'languages: Spanish and English', 'st.online': 'online appointment requests',
+	'fee.h': 'Consultation fees', 'fee.p': 'Clear prices before you come. Choose a service and book your time in one step.',
+	'fee.1': 'Full assessment, prescription and follow-up.', 'fee.7': 'Video call for follow-ups, results and questions.', 'fee.8': 'At your home or hotel, in the clinic area.', 'fee.6': 'Driver\'s licence, work or school.',
+	'fee.book': 'Book', 'fee.tag': 'From home', 'dr.h': 'A doctor who listens',
 	'dr.p1': 'Dr. Goizueta is a Cuban physician practising in Costa Rica. His approach is simple: time to listen, clear explanations and a plan you understand.',
 	'dr.p2': '[Add the doctor\'s training, years of experience and specialties here.]',
 	'dr.l1': 'Registered with the Costa Rican College of Physicians and Surgeons — licence [MED-0000]',
@@ -250,6 +256,81 @@ function initCopy() {
 	});
 }
 
+/* ---------- Doctor tabs ---------- */
+function initTabs() {
+	$$('.tabs').forEach((list) => {
+		const tabs = $$('[role=tab]', list);
+		const show = (tab, focus) => {
+			tabs.forEach((t) => {
+				const on = t === tab;
+				t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1;
+				const panel = $('#' + t.getAttribute('aria-controls'));
+				panel.hidden = !on;
+				if (on) { panel.classList.remove('is-shown'); void panel.offsetWidth; panel.classList.add('is-shown'); }
+			});
+			if (focus) tab.focus();
+		};
+		tabs.forEach((t, i) => {
+			t.addEventListener('click', () => show(t));
+			t.addEventListener('keydown', (e) => {
+				if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+				e.preventDefault(); show(tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length], true);
+			});
+		});
+	});
+}
+
+/* ---------- Numbers that count up when they come into view ---------- */
+function initStats() {
+	const st = CLINIC.stats || {};
+	$$('[data-stat]').forEach((el) => {
+		const v = st[el.dataset.stat];
+		if (v) { el.hidden = false; $('.count', el).dataset.to = v; $('.count', el).textContent = v; }
+	});
+	const counts = $$('.count');
+	const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+	if (reduce || !('IntersectionObserver' in window)) return;
+	const fmt = (n) => Number(n).toLocaleString('es-CR');
+	const run = (el) => {
+		const to = Number(el.dataset.to), t0 = performance.now(), dur = 1400;
+		const step = (t) => { const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3); el.textContent = fmt(Math.round(to * e)); if (k < 1) requestAnimationFrame(step); };
+		requestAnimationFrame(step);
+	};
+	const io = new IntersectionObserver((ents) => ents.forEach((en) => { if (en.isIntersecting) { run(en.target); io.unobserve(en.target); } }), { threshold: .6 });
+	counts.forEach((c) => { c.textContent = '0'; io.observe(c); });
+}
+
+/* ---------- Fees: show prices and book straight into the form ---------- */
+function initFees() {
+	const P = CLINIC.prices || {};
+	const paint = () => $$('[data-price]').forEach((el) => {
+		const v = P[el.dataset.price];
+		el.innerHTML = v ? `<b>₡${Number(v).toLocaleString('es-CR')}</b>` : `<span>${lang === 'en' ? 'Ask for the fee' : 'Consulte la tarifa'}</span>`;
+	});
+	paint();
+	document.addEventListener('langchange', paint);
+	$$('[data-book]').forEach((b) => b.addEventListener('click', () => {
+		const sel = $('#f-service'); sel.selectedIndex = Number(b.dataset.book);
+		sel.closest('.field').classList.remove('is-invalid');
+		$('#citas').scrollIntoView({ behavior: 'smooth' });
+		setTimeout(() => $('#f-date').focus({ preventScroll: true }), 600);
+	}));
+}
+
+/* ---------- Header shadow + reveal stagger ---------- */
+function initMotion() {
+	const header = $('.header');
+	const onScroll = () => header.classList.toggle('is-scrolled', scrollY > 8);
+	addEventListener('scroll', onScroll, { passive: true }); onScroll();
+	// siblings that reveal together come in one after another
+	$$('.reveal').forEach((el) => {
+		const sibs = $$(':scope > .reveal', el.parentElement);
+		const i = sibs.indexOf(el);
+		if (i > 0) el.style.transitionDelay = `${Math.min(i, 6) * 70}ms`;
+	});
+	requestAnimationFrame(() => document.body.classList.add('is-loaded'));
+}
+
 /* ---------- Payment cards (swipe or tap to see each method) ---------- */
 function initWallet() {
 	const track = $('#walletTrack');
@@ -299,6 +380,10 @@ document.addEventListener('DOMContentLoaded', () => {
 	initForm();
 	initCopy();
 	initWallet();
+	initTabs();
+	initStats();
+	initFees();
+	initMotion();
 	$$('.lang__btn').forEach((b) => b.addEventListener('click', () => setLang(b.dataset.lang)));
 	let saved = null;
 	try { saved = localStorage.getItem('lang'); } catch (e) { /* ignore */ }

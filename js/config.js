@@ -11,6 +11,10 @@ const CLINIC = {
 	// Opening hours, 24h, Costa Rica time. 0 = Sunday. null = closed.   ← CONFIRM
 	hours: { 1: [8, 18], 2: [8, 18], 3: [8, 18], 4: [8, 18], 5: [8, 18], 6: [8, 12], 0: null },
 	slotMinutes: 30,                    // length of each appointment slot
+	// Numbers shown under the hero. Leave null to hide one.   ← EDIT with real figures
+	stats: { years: null, patients: null },
+	// Fees in colones (₡). null shows "Consulte la tarifa".   ← EDIT
+	prices: { general: null, tele: null, home: null, cert: null },
 	legalName: 'Clínica Dr. Goizueta',  // name printed on receipts
 	// Automatic e-mails from the clinic panel (free EmailJS account, see Ajustes in the panel).
 	// Leave empty to send by opening the mail app / WhatsApp instead.
