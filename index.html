@@ -11,7 +11,7 @@
 	<link rel="icon" type="image/png" sizes="32x32" href="./assets/logg.png">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;700;900&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@500;700;800;900&family=Red+Hat+Text:wght@400;500;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="css/normalize.css">
 	<link rel="stylesheet" href="css/styles.css">
 	<title>Dr. Goizueta | El Cubano — Clínica médica en Costa Rica</title>
@@ -55,8 +55,8 @@
 	<header class="header" id="top">
 		<div class="wrap header__in">
 			<a class="brand" href="#top">
-				<img src="./assets/logg.png" alt="" width="44" height="44">
-				<span class="brand__txt"><strong>Dr. Goizueta</strong><small data-i18n="brand.sub">El Cubano · Clínica médica</small></span>
+				<img src="./assets/logg.png" alt="" width="60" height="52">
+				<span class="brand__txt"><strong>Dr. Goizueta</strong><small data-i18n="brand.sub">Clínica médica</small></span>
 			</a>
 			<button class="burger" id="burger" aria-expanded="false" aria-controls="nav" aria-label="Menú"><span></span><span></span><span></span></button>
 			<nav class="nav" id="nav" aria-label="Principal">
@@ -76,7 +76,7 @@
 		<section class="hero">
 			<div class="wrap hero__in">
 				<div class="hero__text">
-					<p class="eyebrow" data-i18n="hero.eyebrow">Medicina general y familiar · Costa Rica</p>
+					<p class="eyebrow" data-i18n="hero.eyebrow">Medicina general y familiar en Costa Rica</p>
 					<h1><span class="h1-blue">Dr. Goizueta</span><span class="h1-sub">El Cubano</span></h1>
 					<p class="lead" data-i18n="hero.lead">La salud es prioridad para todos. En la clínica del doctor cubano usted recibirá atención cercana, profesional y sin prisas, en español o en inglés.</p>
 					<div class="hero__cta">
@@ -89,9 +89,14 @@
 						<li data-i18n="chip.3">SINPE Móvil, tarjeta o efectivo</li>
 					</ul>
 				</div>
-				<div class="hero__art">
-					<img src="assets/tablet/image-hero.png" alt="" data-i18n-alt="hero.alt" loading="eager">
-				</div>
+				<aside class="next" aria-labelledby="next-h">
+					<div class="next__head">
+						<h2 id="next-h" data-i18n="nx.h">Próximos horarios libres</h2>
+						<span class="live"><i aria-hidden="true"></i><span data-i18n="nx.live">En vivo</span></span>
+					</div>
+					<div class="next__list" id="nextSlots"><p class="next__note" data-i18n="nx.fb">Consulte la disponibilidad por WhatsApp.</p></div>
+					<a class="btn btn--ghost btn--block" href="#citas" data-i18n="nx.all">Ver todos los horarios</a>
+				</aside>
 			</div>
 		</section>
 
@@ -103,18 +108,18 @@
 		<!-- SERVICES -->
 		<section class="section" id="servicios">
 			<div class="wrap">
-				<p class="eyebrow center" data-i18n="sv.eyebrow">Hecho para la familia</p>
 				<h2 class="center" data-i18n="sv.h">Nuestros servicios</h2>
+				<img class="sv-art" src="assets/tablet/image-hero.png" alt="" data-i18n-alt="hero.alt" width="820" height="303" loading="lazy">
 				<p class="sub center" data-i18n="sv.p">Le atendemos con rapidez y profesionalidad, para que usted y los suyos se sientan seguros de la calidad de la atención.</p>
-				<div class="grid cards">
-					<article class="card reveal"><svg class="ic ic--lg"><use href="#i-steth"/></svg><h3 data-i18n="sv.1.t">Consulta general</h3><p data-i18n="sv.1.p">Valoración, diagnóstico y tratamiento de adultos, con receta y seguimiento.</p></article>
-					<article class="card reveal"><svg class="ic ic--lg"><use href="#i-family"/></svg><h3 data-i18n="sv.2.t">Medicina familiar</h3><p data-i18n="sv.2.p">Atención de niños, adultos y adultos mayores en un mismo lugar.</p></article>
-					<article class="card reveal"><svg class="ic ic--lg"><use href="#i-heart"/></svg><h3 data-i18n="sv.3.t">Control de enfermedades crónicas</h3><p data-i18n="sv.3.p">Seguimiento de presión arterial, diabetes, colesterol y otras condiciones.</p></article>
-					<article class="card reveal"><svg class="ic ic--lg"><use href="#i-bandage"/></svg><h3 data-i18n="sv.4.t">Curaciones y procedimientos menores</h3><p data-i18n="sv.4.p">Curación de heridas, suturas, retiro de puntos y lavado de oídos.</p></article>
-					<article class="card reveal"><svg class="ic ic--lg"><use href="#i-syringe"/></svg><h3 data-i18n="sv.5.t">Inyectables y signos vitales</h3><p data-i18n="sv.5.p">Aplicación de medicamentos con receta, glicemia y toma de presión.</p></article>
-					<article class="card reveal"><svg class="ic ic--lg"><use href="#i-doc"/></svg><h3 data-i18n="sv.6.t">Dictámenes y certificados</h3><p data-i18n="sv.6.p">Dictamen médico para licencia, certificados de salud para trabajo o estudio.</p></article>
-					<article class="card reveal"><svg class="ic ic--lg"><use href="#i-video"/></svg><h3 data-i18n="sv.7.t">Teleconsulta</h3><p data-i18n="sv.7.p">Consulta por videollamada para seguimiento, resultados y dudas.</p></article>
-					<article class="card reveal"><svg class="ic ic--lg"><use href="#i-home"/></svg><h3 data-i18n="sv.8.t">Visita a domicilio</h3><p data-i18n="sv.8.p">Atención en casa u hotel para quienes no pueden trasladarse.</p></article>
+				<div class="svc">
+					<article class="svc__item"><svg class="ic ic--lg"><use href="#i-steth"/></svg><h3 data-i18n="sv.1.t">Consulta general</h3><p data-i18n="sv.1.p">Valoración, diagnóstico y tratamiento de adultos, con receta y seguimiento.</p></article>
+					<article class="svc__item"><svg class="ic ic--lg"><use href="#i-family"/></svg><h3 data-i18n="sv.2.t">Medicina familiar</h3><p data-i18n="sv.2.p">Atención de niños, adultos y adultos mayores en un mismo lugar.</p></article>
+					<article class="svc__item"><svg class="ic ic--lg"><use href="#i-heart"/></svg><h3 data-i18n="sv.3.t">Control de enfermedades crónicas</h3><p data-i18n="sv.3.p">Seguimiento de presión arterial, diabetes, colesterol y otras condiciones.</p></article>
+					<article class="svc__item"><svg class="ic ic--lg"><use href="#i-bandage"/></svg><h3 data-i18n="sv.4.t">Curaciones y procedimientos menores</h3><p data-i18n="sv.4.p">Curación de heridas, suturas, retiro de puntos y lavado de oídos.</p></article>
+					<article class="svc__item"><svg class="ic ic--lg"><use href="#i-syringe"/></svg><h3 data-i18n="sv.5.t">Inyectables y signos vitales</h3><p data-i18n="sv.5.p">Aplicación de medicamentos con receta, glicemia y toma de presión.</p></article>
+					<article class="svc__item"><svg class="ic ic--lg"><use href="#i-doc"/></svg><h3 data-i18n="sv.6.t">Dictámenes y certificados</h3><p data-i18n="sv.6.p">Dictamen médico para licencia, certificados de salud para trabajo o estudio.</p></article>
+					<article class="svc__item"><svg class="ic ic--lg"><use href="#i-video"/></svg><h3 data-i18n="sv.7.t">Teleconsulta</h3><p data-i18n="sv.7.p">Consulta por videollamada para seguimiento, resultados y dudas.</p></article>
+					<article class="svc__item"><svg class="ic ic--lg"><use href="#i-home"/></svg><h3 data-i18n="sv.8.t">Visita a domicilio</h3><p data-i18n="sv.8.p">Atención en casa u hotel para quienes no pueden trasladarse.</p></article>
 				</div>
 				<p class="note center" data-i18n="sv.note">¿No ve lo que necesita? Escríbanos y con gusto le orientamos.</p>
 			</div>
@@ -123,13 +128,13 @@
 		<!-- DOCTOR -->
 		<section class="section section--tint" id="doctor">
 			<div class="wrap split">
-				<div class="gallery reveal">
+				<div class="gallery">
 					<img src="assets/desktop/image-woman-in-videocall.jpg" alt="" loading="lazy">
 					<img src="assets/desktop/image-women-videochatting.jpg" alt="" loading="lazy">
 					<img src="assets/desktop/image-men-in-meeting.jpg" alt="" loading="lazy">
 					<img src="assets/desktop/image-man-texting.jpg" alt="" loading="lazy">
 				</div>
-				<div class="reveal">
+				<div >
 					<p class="eyebrow" data-i18n="dr.eyebrow">Conozca a su médico</p>
 					<h2 data-i18n="dr.h">Un médico que escucha</h2>
 					<p data-i18n="dr.p1">El Dr. Goizueta es médico cubano con consulta en Costa Rica. Su forma de trabajar es sencilla: tiempo para escuchar, explicaciones claras y un plan que usted entienda.</p>
@@ -146,10 +151,9 @@
 		<!-- APPOINTMENTS -->
 		<section class="section" id="citas">
 			<div class="wrap split split--form">
-				<div class="reveal">
-					<p class="eyebrow" data-i18n="ap.eyebrow">Citas</p>
+				<div >
 					<h2 data-i18n="ap.h">Reserve su cita en un minuto</h2>
-					<p data-i18n="ap.p">Elija un horario libre y envíe su solicitud. Aparece en amarillo hasta que la clínica la confirme; entonces pasa a azul y le avisamos por WhatsApp.</p>
+					<p data-i18n="ap.p">Elija un horario libre y envíe su solicitud. Aparece en amarillo hasta que la clínica la confirme; entonces pasa a azul y le avisamos por WhatsApp o correo.</p>
 					<ol class="steps">
 						<li><strong data-i18n="ap.s1t">Envíe su solicitud</strong><span data-i18n="ap.s1p">Elija servicio, día y un horario libre.</span></li>
 						<li><strong data-i18n="ap.s2t">Reciba la confirmación</strong><span data-i18n="ap.s2p">Le respondemos con la hora exacta.</span></li>
@@ -158,7 +162,7 @@
 					<p class="note" data-i18n="ap.cancel">Si no puede asistir, avísenos con al menos 24 horas para darle su espacio a otro paciente.</p>
 				</div>
 
-				<form class="form reveal" id="apptForm" novalidate>
+				<form class="form" id="apptForm" novalidate>
 					<div class="field">
 						<label for="f-name" data-i18n="f.name">Nombre completo</label>
 						<input id="f-name" name="name" type="text" autocomplete="name" required minlength="3">
@@ -168,6 +172,11 @@
 						<label for="f-phone" data-i18n="f.phone">Teléfono / WhatsApp</label>
 						<input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+506 8888 8888" required pattern="[0-9+\(\)\-\s]{8,}">
 						<small class="err" data-i18n="e.phone">Escriba un teléfono válido.</small>
+					</div>
+					<div class="field">
+						<label for="f-email"><span data-i18n="f.email">Correo electrónico</span> <em data-i18n="f.opt">(opcional)</em></label>
+						<input id="f-email" name="email" type="email" autocomplete="email" maxlength="100">
+						<small class="err" data-i18n="e.email">Revise el correo electrónico.</small>
 					</div>
 					<div class="field">
 						<label for="f-service" data-i18n="f.service">Servicio</label>
@@ -219,21 +228,20 @@
 		<!-- PAYMENTS -->
 		<section class="section section--tint" id="pagos">
 			<div class="wrap">
-				<p class="eyebrow center" data-i18n="pay.eyebrow">Pagos</p>
 				<h2 class="center" data-i18n="pay.h">Formas de pago</h2>
 				<p class="sub center" data-i18n="pay.p">El pago se realiza el día de la consulta. Entregamos factura electrónica y comprobante para su aseguradora.</p>
-				<div class="grid pays">
-					<article class="card card--pay reveal">
+				<div class="pays">
+					<article class="pay pay--main">
 						<svg class="ic ic--lg"><use href="#i-phone"/></svg>
 						<h3>SINPE Móvil</h3>
 						<p data-i18n="pay.sinpe">Transfiera desde la app de su banco al número:</p>
 						<div class="copy"><code id="sinpeNum" data-cfg="sinpe"></code><button type="button" class="btn btn--ghost btn--sm" id="copySinpe" data-i18n="pay.copy">Copiar</button></div>
 						<small class="muted" data-i18n="pay.sinpe2">Envíe el comprobante por WhatsApp.</small>
 					</article>
-					<article class="card card--pay reveal"><svg class="ic ic--lg"><use href="#i-card"/></svg><h3 data-i18n="pay.card.t">Tarjeta</h3><p data-i18n="pay.card.p">Débito y crédito Visa y Mastercard en la clínica.</p></article>
-					<article class="card card--pay reveal"><svg class="ic ic--lg"><use href="#i-cash"/></svg><h3 data-i18n="pay.cash.t">Efectivo</h3><p data-i18n="pay.cash.p">Colones (₡) o dólares (US$) al tipo de cambio del día.</p></article>
-					<article class="card card--pay reveal"><svg class="ic ic--lg"><use href="#i-bank"/></svg><h3 data-i18n="pay.bank.t">Transferencia</h3><p data-i18n="pay.bank.p">Transferencia bancaria (IBAN). Solicite los datos de la cuenta por WhatsApp.</p></article>
-					<article class="card card--pay reveal"><svg class="ic ic--lg"><use href="#i-shield"/></svg><h3 data-i18n="pay.ins.t">Seguros</h3><p data-i18n="pay.ins.p">Le entregamos factura e informe médico para que solicite el reembolso a su seguro local o internacional.</p></article>
+					<article class="pay"><svg class="ic ic--lg"><use href="#i-card"/></svg><h3 data-i18n="pay.card.t">Tarjeta</h3><p data-i18n="pay.card.p">Débito y crédito Visa y Mastercard en la clínica.</p></article>
+					<article class="pay"><svg class="ic ic--lg"><use href="#i-cash"/></svg><h3 data-i18n="pay.cash.t">Efectivo</h3><p data-i18n="pay.cash.p">Colones (₡) o dólares (US$) al tipo de cambio del día.</p></article>
+					<article class="pay"><svg class="ic ic--lg"><use href="#i-bank"/></svg><h3 data-i18n="pay.bank.t">Transferencia</h3><p data-i18n="pay.bank.p">Transferencia bancaria (IBAN). Solicite los datos de la cuenta por WhatsApp.</p></article>
+					<article class="pay"><svg class="ic ic--lg"><use href="#i-shield"/></svg><h3 data-i18n="pay.ins.t">Seguros</h3><p data-i18n="pay.ins.p">Le entregamos factura e informe médico para que solicite el reembolso a su seguro local o internacional.</p></article>
 				</div>
 				<p class="note center"><span data-i18n="pay.price">¿Desea conocer el costo de una consulta?</span> <a data-cfg-wa="price" target="_blank" rel="noopener" href="#" data-i18n="pay.ask">Consulte tarifas por WhatsApp</a></p>
 			</div>
@@ -242,9 +250,8 @@
 		<!-- LOCATION & HOURS -->
 		<section class="section" id="ubicacion">
 			<div class="wrap split">
-				<div class="reveal">
-					<p class="eyebrow" data-i18n="loc.eyebrow">Ubicación y horario</p>
-					<h2 data-i18n="loc.h">Visítenos</h2>
+				<div >
+					<h2 data-i18n="loc.h">Ubicación y horario</h2>
 					<ul class="contact">
 						<li><svg class="ic"><use href="#i-pin"/></svg><span data-cfg="address"></span></li>
 						<li><svg class="ic"><use href="#i-phone"/></svg><a data-cfg-tel href="#"><span data-cfg="phoneDisplay"></span></a></li>
@@ -255,7 +262,7 @@
 						<a class="btn btn--ghost btn--sm" id="waze" target="_blank" rel="noopener" href="#">Waze</a>
 					</div>
 				</div>
-				<div class="hours reveal">
+				<div class="hours">
 					<h3><svg class="ic"><use href="#i-clock"/></svg> <span data-i18n="loc.hours">Horario de atención</span></h3>
 					<table id="hoursTable"><tbody></tbody></table>
 					<small class="muted" data-i18n="loc.tz">Hora de Costa Rica (GMT-6). Feriados: consulte por WhatsApp.</small>
@@ -267,7 +274,6 @@
 		<!-- FAQ -->
 		<section class="section section--tint" id="faq">
 			<div class="wrap wrap--narrow">
-				<p class="eyebrow center">FAQ</p>
 				<h2 class="center" data-i18n="faq.h">Preguntas frecuentes</h2>
 				<details class="faq"><summary data-i18n="faq.1q">¿Necesito cita o puedo llegar sin avisar?</summary><p data-i18n="faq.1a">Recomendamos reservar para no esperar. Si llega sin cita, le atendemos según disponibilidad.</p></details>
 				<details class="faq"><summary data-i18n="faq.2q">¿Atienden en inglés?</summary><p data-i18n="faq.2a">Sí. La consulta, las indicaciones y los documentos pueden darse en español o en inglés.</p></details>
@@ -295,7 +301,7 @@
 	<footer class="footer">
 		<div class="wrap footer__in">
 			<div>
-				<a class="brand brand--light" href="#top"><img src="./assets/logg.png" alt="" width="40" height="40"><span class="brand__txt"><strong>Dr. Goizueta</strong><small>El Cubano</small></span></a>
+				<a class="brand brand--light" href="#top"><img src="./assets/logg.png" alt="" width="56" height="48"><span class="brand__txt"><strong>Dr. Goizueta</strong><small>El Cubano</small></span></a>
 				<p class="muted" data-i18n="ft.tag">Medicina general y familiar en Costa Rica.</p>
 			</div>
 			<div>

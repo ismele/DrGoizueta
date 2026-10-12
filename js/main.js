@@ -7,10 +7,11 @@
 /* ---------- English texts (Spanish lives in index.html) ---------- */
 const EN = {
 	'skip': 'Skip to content',
-	'brand.sub': 'El Cubano · Medical clinic',
+	'brand.sub': 'Medical clinic',
 	'nav.services': 'Services', 'nav.doctor': 'The doctor', 'nav.appt': 'Appointments', 'nav.pay': 'Payments', 'nav.loc': 'Location', 'nav.faq': 'FAQ',
 	'cta.book': 'Book appointment', 'cta.wa': 'Message us on WhatsApp',
-	'hero.eyebrow': 'General & family medicine · Costa Rica',
+	'hero.eyebrow': 'General and family medicine in Costa Rica',
+	'nx.h': 'Next available times', 'nx.live': 'Live', 'nx.all': 'See all times', 'nx.fb': 'Ask about availability on WhatsApp.',
 	'hero.lead': 'Health comes first for everyone. At the Cuban doctor\'s clinic you get close, professional, unhurried care — in Spanish or English.',
 	'hero.alt': 'Portraits of patients of all ages',
 	'chip.1': 'Spanish & English', 'chip.2': 'Booking by WhatsApp', 'chip.3': 'SINPE Móvil, card or cash',
@@ -32,12 +33,12 @@ const EN = {
 	'dr.l1': 'Registered with the Costa Rican College of Physicians and Surgeons — licence [MED-0000]',
 	'dr.l2': 'Care in Spanish and English', 'dr.l3': 'Prescriptions, referrals and receipts for your insurer',
 	'ap.eyebrow': 'Appointments', 'ap.h': 'Book your visit in one minute',
-	'ap.p': 'Pick a free time and send your request. It shows in yellow until the clinic confirms it; then it turns blue and we message you on WhatsApp.',
+	'ap.p': 'Pick a free time and send your request. It shows in yellow until the clinic confirms it; then it turns blue and we message you on WhatsApp or email.',
 	'ap.s1t': 'Send your request', 'ap.s1p': 'Choose a service, a day and a free time.',
 	'ap.s2t': 'Get your confirmation', 'ap.s2p': 'We reply with the exact time.',
 	'ap.s3t': 'Come to your visit', 'ap.s3p': 'Bring your ID and any previous test results.',
 	'ap.cancel': 'If you can\'t make it, please let us know at least 24 hours ahead so another patient can take the slot.',
-	'f.name': 'Full name', 'f.phone': 'Phone / WhatsApp', 'f.service': 'Service', 'f.choose': 'Select…',
+	'f.name': 'Full name', 'f.phone': 'Phone / WhatsApp', 'f.email': 'Email', 'e.email': 'Check the email address.', 'f.service': 'Service', 'f.choose': 'Select…',
 	'f.date': 'Date', 'f.slot': 'Available times', 'lg.free': 'Free', 'lg.req': 'Requested', 'lg.sch': 'Booked',
 	'f.patient': 'Is this your first visit?', 'f.yes': 'Yes', 'f.no': 'No',
 	'f.note': 'Reason for visit', 'f.opt': '(optional)',
@@ -53,7 +54,7 @@ const EN = {
 	'pay.bank.t': 'Bank transfer', 'pay.bank.p': 'Bank transfer (IBAN). Ask for the account details on WhatsApp.',
 	'pay.ins.t': 'Insurance', 'pay.ins.p': 'We give you an invoice and medical report so you can claim reimbursement from your local or international insurer.',
 	'pay.price': 'Want to know what a visit costs?', 'pay.ask': 'Ask for fees on WhatsApp',
-	'loc.eyebrow': 'Location & hours', 'loc.h': 'Visit us', 'loc.hours': 'Opening hours',
+	'loc.h': 'Location and hours', 'loc.hours': 'Opening hours',
 	'loc.tz': 'Costa Rica time (GMT-6). Public holidays: ask on WhatsApp.',
 	'faq.h': 'Frequently asked questions',
 	'faq.1q': 'Do I need an appointment or can I walk in?', 'faq.1a': 'We recommend booking so you don\'t wait. Walk-ins are seen subject to availability.',
@@ -191,7 +192,7 @@ function initForm() {
 	const mark = (input, ok) => { input.closest('.field').classList.toggle('is-invalid', !ok); return ok; };
 	const check = (input) => mark(input, input === date ? dateOk() : input.checkValidity());
 
-	['#f-name', '#f-phone', '#f-service', '#f-date'].forEach((id) => {
+	['#f-name', '#f-phone', '#f-email', '#f-service', '#f-date'].forEach((id) => {
 		const el = $(id);
 		el.addEventListener('blur', () => check(el));
 		el.addEventListener('change', () => check(el));
@@ -199,7 +200,7 @@ function initForm() {
 
 	form.addEventListener('submit', (e) => {
 		e.preventDefault();
-		const inputs = ['#f-name', '#f-phone', '#f-service', '#f-date'].map((id) => $(id));
+		const inputs = ['#f-name', '#f-phone', '#f-email', '#f-service', '#f-date'].map((id) => $(id));
 		const bad = inputs.filter((el) => !check(el));
 		const ok = $('#f-ok').checked;
 		$('#okErr').classList.toggle('is-shown', !ok);
@@ -208,7 +209,7 @@ function initForm() {
 		const sv = $('#f-service').selectedOptions[0];
 		const note = $('#f-note').value.trim();
 		const data = {
-			name: $('#f-name').value.trim(), phone: $('#f-phone').value.trim(),
+			name: $('#f-name').value.trim(), phone: $('#f-phone').value.trim(), email: $('#f-email').value.trim(),
 			service: sv.dataset.es || sv.textContent, date: date.value,
 			first: form.elements.first.value, note, lang
 		};

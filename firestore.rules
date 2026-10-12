@@ -27,7 +27,8 @@ service cloud.firestore {
     match /appointments/{id} {
       allow read, update, delete: if isStaff();
       allow create: if isStaff() || (
-        request.resource.data.keys().hasOnly(['slotId', 'date', 'time', 'status', 'name', 'phone', 'service', 'first', 'note', 'lang', 'createdAt'])
+        request.resource.data.keys().hasOnly(['slotId', 'date', 'time', 'status', 'name', 'phone', 'email', 'service', 'first', 'note', 'lang', 'createdAt'])
+        && (!('email' in request.resource.data) || (request.resource.data.email is string && request.resource.data.email.size() <= 100))
         && request.resource.data.status == 'requested'
         && okDate(request.resource.data.date) && okTime(request.resource.data.time)
         && request.resource.data.slotId == request.resource.data.date + '_' + request.resource.data.time
