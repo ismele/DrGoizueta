@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="robots" content="noindex, nofollow">
+	<link rel="icon" type="image/png" href="./assets/logg.png">
+	<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;700;900&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="css/normalize.css">
+	<link rel="stylesheet" href="css/styles.css">
+	<title>Agenda | Clínica Dr. Goizueta</title>
+</head>
+<body class="adm">
+	<header class="adm__bar">
+		<div class="wrap">
+			<a class="brand" href="index.html"><img src="./assets/logg.png" alt="" width="40" height="40"><span class="brand__txt"><strong>Dr. Goizueta</strong><small>Agenda de la clínica</small></span></a>
+			<span class="adm__user muted" id="who"></span>
+			<button class="btn btn--ghost btn--sm" id="logout" hidden>Cerrar sesión</button>
+		</div>
+	</header>
+
+	<!-- LOGIN -->
+	<div class="wrap" id="loginView" hidden>
+		<form class="form login" id="loginForm">
+			<h2>Acceso de la clínica</h2>
+			<div class="field"><label for="l-email">Correo</label><input id="l-email" type="email" autocomplete="username" required></div>
+			<div class="field"><label for="l-pass">Contraseña</label><input id="l-pass" type="password" autocomplete="current-password" required></div>
+			<button class="btn btn--primary btn--block" type="submit">Entrar</button>
+			<p class="form__msg is-error" id="loginMsg" role="alert"></p>
+		</form>
+	</div>
+
+	<!-- AGENDA -->
+	<div class="wrap" id="appView" hidden>
+		<div class="banner" id="banner" role="alert" hidden></div>
+		<div class="adm__main">
+			<section class="panel">
+				<div class="daynav">
+					<button class="btn btn--ghost btn--sm" id="prev" aria-label="Día anterior">‹</button>
+					<input type="date" id="day" aria-label="Fecha">
+					<button class="btn btn--ghost btn--sm" id="next" aria-label="Día siguiente">›</button>
+					<button class="btn btn--ghost btn--sm" id="today">Hoy</button>
+					<strong id="dayName"></strong>
+				</div>
+				<div class="counts" id="counts"></div>
+				<div class="agenda" id="agenda" aria-live="polite"></div>
+				<ul class="legend">
+					<li><i class="sw sw--requested"></i>Solicitada</li>
+					<li><i class="sw sw--scheduled"></i>Agendada</li>
+					<li><i class="sw sw--completed"></i>Completada</li>
+					<li><i class="sw sw--cancelled"></i>Cancelada</li>
+				</ul>
+			</section>
+			<aside class="panel">
+				<h2>Solicitudes por confirmar <span class="pill pill--requested" id="pendCount">0</span></h2>
+				<div class="pend" id="pending"></div>
+			</aside>
+		</div>
+	</div>
+
+	<!-- NEW APPOINTMENT (phone / walk-in) -->
+	<dialog class="dlg" id="newDlg">
+		<form id="newForm" method="dialog">
+			<h2 id="newTitle">Agendar cita</h2>
+			<div class="field"><label for="n-name">Nombre del paciente</label><input id="n-name" required minlength="3" maxlength="80"></div>
+			<div class="field"><label for="n-phone">Teléfono / WhatsApp</label><input id="n-phone" type="tel" required maxlength="25"></div>
+			<div class="field"><label for="n-service">Servicio</label>
+				<select id="n-service">
+					<option>Consulta general</option><option>Medicina familiar</option><option>Control de enfermedades crónicas</option>
+					<option>Curaciones y procedimientos menores</option><option>Inyectables y signos vitales</option>
+					<option>Dictámenes y certificados</option><option>Teleconsulta</option><option>Visita a domicilio</option>
+				</select></div>
+			<div class="field"><label for="n-note">Nota</label><textarea id="n-note" rows="2" maxlength="400"></textarea></div>
+			<div class="dlg__acts">
+				<button class="btn btn--ghost btn--sm" type="button" id="newCancel">Cerrar</button>
+				<button class="btn btn--primary btn--sm" type="submit">Agendar</button>
+			</div>
+		</form>
+	</dialog>
+
+	<script src="js/config.js"></script>
+	<script type="module" src="js/admin.js"></script>
+</body>
+</html>

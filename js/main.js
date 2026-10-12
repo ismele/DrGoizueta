@@ -1,16 +1,8 @@
 /* =====================================================
    Clínica Dr. Goizueta — main.js
-   Edit CLINIC below to update the whole site.
+   Settings are in js/config.js.
    ===================================================== */
-const CLINIC = {
-	whatsapp: '50689829494',            // digits only, with country code
-	phoneDisplay: '+506 8982 9494',
-	sinpe: '8982 9494',                 // SINPE Móvil number  ← CONFIRM
-	address: { es: '[Dirección de la clínica], Costa Rica', en: '[Clinic address], Costa Rica' }, // ← EDIT
-	mapsQuery: '',                      // e.g. 'Clínica Dr. Goizueta, Alajuela' — leave '' to hide the map
-	// Opening hours, 24h, Costa Rica time. 0 = Sunday. null = closed.   ← CONFIRM
-	hours: { 1: [8, 18], 2: [8, 18], 3: [8, 18], 4: [8, 18], 5: [8, 18], 6: [8, 12], 0: null }
-};
+/* CLINIC settings live in js/config.js */
 
 /* ---------- English texts (Spanish lives in index.html) ---------- */
 const EN = {
@@ -40,19 +32,19 @@ const EN = {
 	'dr.l1': 'Registered with the Costa Rican College of Physicians and Surgeons — licence [MED-0000]',
 	'dr.l2': 'Care in Spanish and English', 'dr.l3': 'Prescriptions, referrals and receipts for your insurer',
 	'ap.eyebrow': 'Appointments', 'ap.h': 'Book your visit in one minute',
-	'ap.p': 'Fill in the form and WhatsApp will open with your request ready to send. We confirm the time through the same chat.',
-	'ap.s1t': 'Send your request', 'ap.s1p': 'Choose a service, day and preferred time.',
+	'ap.p': 'Pick a free time and send your request. It shows in yellow until the clinic confirms it; then it turns blue and we message you on WhatsApp.',
+	'ap.s1t': 'Send your request', 'ap.s1p': 'Choose a service, a day and a free time.',
 	'ap.s2t': 'Get your confirmation', 'ap.s2p': 'We reply with the exact time.',
 	'ap.s3t': 'Come to your visit', 'ap.s3p': 'Bring your ID and any previous test results.',
 	'ap.cancel': 'If you can\'t make it, please let us know at least 24 hours ahead so another patient can take the slot.',
 	'f.name': 'Full name', 'f.phone': 'Phone / WhatsApp', 'f.service': 'Service', 'f.choose': 'Select…',
-	'f.date': 'Preferred date', 'f.time': 'Time of day', 'f.am': 'Morning', 'f.pm': 'Afternoon', 'f.any': 'Any',
+	'f.date': 'Date', 'f.slot': 'Available times', 'lg.free': 'Free', 'lg.req': 'Requested', 'lg.sch': 'Booked',
 	'f.patient': 'Is this your first visit?', 'f.yes': 'Yes', 'f.no': 'No',
 	'f.note': 'Reason for visit', 'f.opt': '(optional)',
 	'f.consent': 'I agree that the clinic may use this information to manage my appointment.',
-	'f.send': 'Send request via WhatsApp',
+	'f.send': 'Request appointment',
 	'e.name': 'Please enter your name.', 'e.phone': 'Please enter a valid phone number.', 'e.service': 'Please choose a service.',
-	'e.date': 'Choose a date when the clinic is open.', 'e.ok': 'You must agree to continue.',
+	'e.date': 'Choose a date when the clinic is open.', 'e.slot': 'Choose a free time.', 'e.ok': 'You must agree to continue.',
 	'pay.eyebrow': 'Payments', 'pay.h': 'Payment methods',
 	'pay.p': 'Payment is made on the day of your visit. We issue an electronic invoice and a receipt for your insurer.',
 	'pay.sinpe': 'Transfer from your bank app to:', 'pay.copy': 'Copy', 'pay.sinpe2': 'Send the receipt by WhatsApp.',
@@ -71,7 +63,7 @@ const EN = {
 	'faq.5q': 'How does telemedicine work?', 'faq.5a': 'Book like any appointment, pay by SINPE Móvil or transfer, and get the video-call link on WhatsApp.',
 	'faq.6q': 'Do you issue electronic invoices?', 'faq.6a': 'Yes — just tell us the name and email to send it to.',
 	'cta.h': 'Your health, in good hands', 'cta.p': 'Stay connected and get in touch.',
-	'ft.tag': 'General and family medicine in Costa Rica.', 'ft.links': 'Links', 'ft.contact': 'Contact',
+	'ft.tag': 'General and family medicine in Costa Rica.', 'ft.links': 'Links', 'ft.contact': 'Contact', 'ft.staff': 'Clinic access',
 	'ft.rights': 'All rights reserved.', 'ft.disc': 'The information on this site is for guidance only and does not replace a medical consultation.'
 };
 
@@ -88,6 +80,7 @@ let lang = 'es';
 
 /* ---------- Helpers ---------- */
 const waLink = (msg) => `https://wa.me/${CLINIC.whatsapp}${msg ? '?text=' + encodeURIComponent(msg) : ''}`;
+window.waLink = waLink;
 const crNow = () => new Date(Date.now() - 6 * 3600 * 1000); // read with getUTC*()
 const fmtHour = (h) => {
 	const hh = Math.floor(h), mm = Math.round((h - hh) * 60);
@@ -112,7 +105,9 @@ function setLang(l) {
 	fillWaLinks();
 	renderHours();
 	try { localStorage.setItem('lang', lang); } catch (e) { /* ignore */ }
+	document.dispatchEvent(new CustomEvent('langchange'));
 }
+window.getLang = () => lang;
 
 /* ---------- Config → DOM ---------- */
 function fillConfig() {
@@ -210,23 +205,27 @@ function initForm() {
 		$('#okErr').classList.toggle('is-shown', !ok);
 		if (bad.length || !ok) { (bad[0] || $('#f-ok')).focus(); return; }
 
-		const sv = $('#f-service').selectedOptions[0], tm = $('#f-time').selectedOptions[0];
+		const sv = $('#f-service').selectedOptions[0];
+		const note = $('#f-note').value.trim();
+		const data = {
+			name: $('#f-name').value.trim(), phone: $('#f-phone').value.trim(),
+			service: sv.dataset.es || sv.textContent, date: date.value,
+			first: form.elements.first.value, note, lang
+		};
+		// Live agenda (js/booking.js). If it could not load, fall back to WhatsApp.
+		if (window.BOOKING) { window.BOOKING.submit(data); return; }
 		const [y, m, d] = date.value.split('-');
 		const dow = new Date(date.value + 'T12:00:00Z').getUTCDay();
-		const note = $('#f-note').value.trim();
-		// Message is always written in Spanish for the clinic staff.
 		const msg = [
 			'*Solicitud de cita* 🩺',
-			`*Nombre:* ${$('#f-name').value.trim()}`,
-			`*Teléfono:* ${$('#f-phone').value.trim()}`,
-			`*Servicio:* ${sv.dataset.es || sv.textContent}`,
+			`*Nombre:* ${data.name}`,
+			`*Teléfono:* ${data.phone}`,
+			`*Servicio:* ${data.service}`,
 			`*Fecha:* ${UI.es.days[dow]} ${d}/${m}/${y}`,
-			`*Horario:* ${tm.dataset.es || tm.textContent}`,
-			`*Primera visita:* ${form.elements.first.value}`,
+			`*Primera visita:* ${data.first}`,
 			note ? `*Motivo:* ${note}` : '',
 			lang === 'en' ? '*Idioma preferido:* inglés / English' : ''
 		].filter(Boolean).join('\n');
-
 		window.open(waLink(msg), '_blank', 'noopener');
 		$('#formMsg').textContent = UI[lang].sent;
 	});

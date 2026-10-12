@@ -149,9 +149,9 @@
 				<div class="reveal">
 					<p class="eyebrow" data-i18n="ap.eyebrow">Citas</p>
 					<h2 data-i18n="ap.h">Reserve su cita en un minuto</h2>
-					<p data-i18n="ap.p">Complete el formulario y se abrirá WhatsApp con su solicitud lista para enviar. Le confirmamos la hora por ese mismo medio.</p>
+					<p data-i18n="ap.p">Elija un horario libre y envíe su solicitud. Aparece en amarillo hasta que la clínica la confirme; entonces pasa a azul y le avisamos por WhatsApp.</p>
 					<ol class="steps">
-						<li><strong data-i18n="ap.s1t">Envíe su solicitud</strong><span data-i18n="ap.s1p">Elija servicio, día y horario preferido.</span></li>
+						<li><strong data-i18n="ap.s1t">Envíe su solicitud</strong><span data-i18n="ap.s1p">Elija servicio, día y un horario libre.</span></li>
 						<li><strong data-i18n="ap.s2t">Reciba la confirmación</strong><span data-i18n="ap.s2p">Le respondemos con la hora exacta.</span></li>
 						<li><strong data-i18n="ap.s3t">Asista a su cita</strong><span data-i18n="ap.s3p">Traiga su identificación y exámenes previos.</span></li>
 					</ol>
@@ -166,7 +166,7 @@
 					</div>
 					<div class="field">
 						<label for="f-phone" data-i18n="f.phone">Teléfono / WhatsApp</label>
-						<input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+506 8888 8888" required pattern="[0-9+()\-\s]{8,}">
+						<input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+506 8888 8888" required pattern="[0-9+\(\)\-\s]{8,}">
 						<small class="err" data-i18n="e.phone">Escriba un teléfono válido.</small>
 					</div>
 					<div class="field">
@@ -184,20 +184,20 @@
 						</select>
 						<small class="err" data-i18n="e.service">Seleccione un servicio.</small>
 					</div>
-					<div class="row">
-						<div class="field">
-							<label for="f-date" data-i18n="f.date">Fecha preferida</label>
-							<input id="f-date" name="date" type="date" required>
-							<small class="err" id="dateErr" data-i18n="e.date">Elija una fecha en que la clínica esté abierta.</small>
-						</div>
-						<div class="field">
-							<label for="f-time" data-i18n="f.time">Horario</label>
-							<select id="f-time" name="time" required>
-								<option data-i18n="f.am">Mañana</option>
-								<option data-i18n="f.pm">Tarde</option>
-								<option data-i18n="f.any">Cualquiera</option>
-							</select>
-						</div>
+					<div class="field">
+						<label for="f-date" data-i18n="f.date">Fecha</label>
+						<input id="f-date" name="date" type="date" required>
+						<small class="err" id="dateErr" data-i18n="e.date">Elija una fecha en que la clínica esté abierta.</small>
+					</div>
+					<div class="field" id="slotField">
+						<span class="lbl" data-i18n="f.slot">Horarios disponibles</span>
+						<div class="slots" id="slots" aria-live="polite"></div>
+						<ul class="legend">
+							<li><i class="sw sw--free"></i><span data-i18n="lg.free">Libre</span></li>
+							<li><i class="sw sw--requested"></i><span data-i18n="lg.req">Solicitado</span></li>
+							<li><i class="sw sw--scheduled"></i><span data-i18n="lg.sch">Agendado</span></li>
+						</ul>
+						<small class="err" data-i18n="e.slot">Elija un horario libre.</small>
 					</div>
 					<fieldset class="field radios">
 						<legend data-i18n="f.patient">¿Es su primera visita?</legend>
@@ -210,7 +210,7 @@
 					</div>
 					<label class="check"><input type="checkbox" id="f-ok" required> <span data-i18n="f.consent">Acepto que la clínica use estos datos para gestionar mi cita.</span></label>
 					<small class="err" id="okErr" data-i18n="e.ok">Debe aceptar para continuar.</small>
-					<button class="btn btn--wa btn--block" type="submit"><svg class="ic"><use href="#i-wa"/></svg><span data-i18n="f.send">Enviar solicitud por WhatsApp</span></button>
+					<button class="btn btn--primary btn--block" type="submit"><span data-i18n="f.send">Solicitar cita</span></button>
 					<p class="form__msg" id="formMsg" role="status" aria-live="polite"></p>
 				</form>
 			</div>
@@ -310,6 +310,7 @@
 				<a data-cfg-tel href="#"><span data-cfg="phoneDisplay"></span></a>
 				<a data-cfg-wa target="_blank" rel="noopener" href="#">WhatsApp</a>
 				<span data-cfg="address"></span>
+				<a href="admin.html" data-i18n="ft.staff">Acceso clínica</a>
 			</div>
 		</div>
 		<div class="wrap footer__legal">
@@ -320,6 +321,8 @@
 
 	<a class="fab" data-cfg-wa target="_blank" rel="noopener" href="#" aria-label="WhatsApp"><svg class="ic"><use href="#i-wa"/></svg></a>
 
+	<script src="js/config.js"></script>
 	<script src="js/main.js"></script>
+	<script type="module" src="js/booking.js"></script>
 </body>
 </html>

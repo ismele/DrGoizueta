@@ -251,3 +251,79 @@ h1 { font-size: clamp(2.5rem, 7vw, 4.25rem); margin-bottom: 1rem; }
 @media print {
 	.topbar, .header, .fab, .form, .cta, .map { display: none !important; }
 }
+
+/* =====================================================
+   Live agenda — status colours
+   ===================================================== */
+:root {
+	--st-req: #F2B63C; --st-req-bg: #FFF3D1; --st-req-ink: #6B4A00;
+	--st-sch: #1F4E8C; --st-sch-bg: #DCE9F9; --st-sch-ink: #163A69;
+	--st-done: #1E8E5A; --st-done-bg: #DDF3E7; --st-done-ink: #14613D;
+	--st-can: #9AA7BA; --st-can-bg: #EEF1F5; --st-can-ink: #56617A;
+}
+.lbl { display: block; font-weight: 700; color: var(--ink); font-size: .9rem; margin-bottom: .35rem; }
+.slots { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: .5rem; }
+.slots__hint { grid-column: 1 / -1; margin: 0; font-size: .9rem; }
+.slot { font: inherit; font-weight: 700; font-size: .9rem; min-height: 2.75rem; border-radius: 10px; border: 1.5px solid var(--teal); background: #fff; color: var(--teal-dark); cursor: pointer; }
+.slot--free:hover { background: var(--teal-soft); }
+.slot.is-picked { background: var(--teal-dark); border-color: var(--teal-dark); color: #fff; }
+.slot:disabled { cursor: not-allowed; }
+.slot--requested { background: var(--st-req-bg); border-color: var(--st-req); color: var(--st-req-ink); }
+.slot--scheduled { background: var(--st-sch-bg); border-color: var(--st-sch); color: var(--st-sch-ink); }
+.slot--past { background: var(--st-can-bg); border-color: var(--line); color: #9AA7BA; text-decoration: line-through; }
+.legend { list-style: none; display: flex; flex-wrap: wrap; gap: .4rem 1rem; padding: 0; margin: .7rem 0 0; font-size: .8rem; }
+.legend li { display: flex; align-items: center; gap: .35rem; }
+.sw { width: .9rem; height: .9rem; border-radius: 4px; border: 1.5px solid; display: inline-block; }
+.sw--free { background: #fff; border-color: var(--teal); }
+.sw--requested { background: var(--st-req-bg); border-color: var(--st-req); }
+.sw--scheduled { background: var(--st-sch-bg); border-color: var(--st-sch); }
+.sw--completed { background: var(--st-done-bg); border-color: var(--st-done); }
+.sw--cancelled { background: var(--st-can-bg); border-color: var(--st-can); }
+.form__msg.is-error { color: var(--danger); }
+.form__msg a { font-weight: 700; }
+
+/* ---------- Clinic panel (admin.html) ---------- */
+.adm { background: var(--bg); min-height: 100vh; }
+.adm__bar { background: #fff; border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 20; }
+.adm__bar .wrap { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; min-height: 64px; padding: .5rem 0; }
+.adm__bar .brand { margin-right: auto; }
+.adm__user { font-size: .85rem; }
+.login { max-width: 400px; margin: 4rem auto; }
+.adm__main { display: grid; gap: 1.5rem; padding: 1.5rem 0 3rem; align-items: start; }
+.panel { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 1.25rem; }
+.panel h2 { font-size: 1.15rem; margin-bottom: .75rem; }
+.daynav { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.daynav input { font: inherit; border: 1.5px solid var(--line); border-radius: 10px; padding: .45rem .6rem; min-height: 2.5rem; }
+.daynav strong { color: var(--ink); margin-left: .25rem; }
+.counts { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1rem; }
+.pill { display: inline-flex; align-items: center; gap: .35rem; border-radius: 999px; padding: .2rem .7rem; font-size: .8rem; font-weight: 700; border: 1.5px solid; }
+.pill--requested { background: var(--st-req-bg); border-color: var(--st-req); color: var(--st-req-ink); }
+.pill--scheduled { background: var(--st-sch-bg); border-color: var(--st-sch); color: var(--st-sch-ink); }
+.pill--completed { background: var(--st-done-bg); border-color: var(--st-done); color: var(--st-done-ink); }
+.pill--cancelled { background: var(--st-can-bg); border-color: var(--st-can); color: var(--st-can-ink); }
+.agenda { display: grid; gap: .5rem; }
+.arow { display: grid; grid-template-columns: 5.2rem 1fr; gap: .75rem; align-items: stretch; }
+.arow__time { font-weight: 900; color: var(--ink); font-size: .9rem; padding-top: .7rem; }
+.arow__free { border: 1.5px dashed var(--line); border-radius: 12px; padding: .5rem .8rem; display: flex; align-items: center; justify-content: space-between; color: #9AA7BA; font-size: .9rem; }
+.appt { border-radius: 12px; border: 1.5px solid; border-left-width: 6px; padding: .7rem .9rem; }
+.appt--requested { background: var(--st-req-bg); border-color: var(--st-req); }
+.appt--scheduled { background: var(--st-sch-bg); border-color: var(--st-sch); }
+.appt--completed { background: var(--st-done-bg); border-color: var(--st-done); }
+.appt--cancelled { background: var(--st-can-bg); border-color: var(--st-can); opacity: .8; }
+.appt__head { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; }
+.appt__head strong { color: var(--ink); }
+.appt__meta { font-size: .875rem; margin: .25rem 0 .5rem; color: var(--ink); }
+.appt__meta span { display: block; }
+.appt__acts { display: flex; flex-wrap: wrap; gap: .4rem; }
+.appt__acts .btn, .arow__free .btn { min-height: 2.1rem; padding: .25rem .85rem; font-size: .82rem; background: #fff; }
+.btn--ok { color: var(--st-sch-ink); border-color: var(--st-sch); }
+.btn--done { color: var(--st-done-ink); border-color: var(--st-done); }
+.btn--no { color: var(--danger); border-color: #E3B4B0; }
+.pend { display: grid; gap: .6rem; }
+.pend .appt { cursor: pointer; }
+.banner { background: #FDECEA; border: 1px solid #F1B8B3; color: var(--danger); border-radius: 12px; padding: .75rem 1rem; margin-top: 1rem; font-size: .9rem; }
+.banner[hidden], .adm [hidden] { display: none !important; }
+dialog.dlg { border: 0; border-radius: var(--radius); padding: 1.5rem; width: min(440px, 92vw); box-shadow: 0 20px 60px rgba(0,0,0,.3); }
+dialog.dlg::backdrop { background: rgba(31,42,61,.5); }
+.dlg__acts { display: flex; gap: .5rem; justify-content: flex-end; }
+@media (min-width: 900px) { .adm__main { grid-template-columns: 1.7fr 1fr; } }
