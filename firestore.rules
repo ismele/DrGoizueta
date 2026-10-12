@@ -5,7 +5,7 @@ service cloud.firestore {
     // ← Put here the e-mail(s) of the clinic user(s) created in Authentication.
     function isStaff() {
       return request.auth != null
-        && request.auth.token.email in ['CAMBIAR@correo.com'];
+        && request.auth.token.email in ['ismele@samsarasystems.com'];
     }
     function okDate(d) { return d is string && d.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$'); }
     function okTime(t) { return t is string && t.matches('^[0-9]{2}:[0-9]{2}$'); }
