@@ -230,18 +230,70 @@
 			<div class="wrap">
 				<h2 class="center" data-i18n="pay.h">Formas de pago</h2>
 				<p class="sub center" data-i18n="pay.p">El pago se realiza el día de la consulta. Entregamos factura electrónica y comprobante para su aseguradora.</p>
-				<div class="pays">
-					<article class="pay pay--main">
-						<svg class="ic ic--lg"><use href="#i-phone"/></svg>
-						<h3>SINPE Móvil</h3>
-						<p data-i18n="pay.sinpe">Transfiera desde la app de su banco al número:</p>
-						<div class="copy"><code id="sinpeNum" data-cfg="sinpe"></code><button type="button" class="btn btn--ghost btn--sm" id="copySinpe" data-i18n="pay.copy">Copiar</button></div>
-						<small class="muted" data-i18n="pay.sinpe2">Envíe el comprobante por WhatsApp.</small>
-					</article>
-					<article class="pay"><svg class="ic ic--lg"><use href="#i-card"/></svg><h3 data-i18n="pay.card.t">Tarjeta</h3><p data-i18n="pay.card.p">Débito y crédito Visa y Mastercard en la clínica.</p></article>
-					<article class="pay"><svg class="ic ic--lg"><use href="#i-cash"/></svg><h3 data-i18n="pay.cash.t">Efectivo</h3><p data-i18n="pay.cash.p">Colones (₡) o dólares (US$) al tipo de cambio del día.</p></article>
-					<article class="pay"><svg class="ic ic--lg"><use href="#i-bank"/></svg><h3 data-i18n="pay.bank.t">Transferencia</h3><p data-i18n="pay.bank.p">Transferencia bancaria (IBAN). Solicite los datos de la cuenta por WhatsApp.</p></article>
-					<article class="pay"><svg class="ic ic--lg"><use href="#i-shield"/></svg><h3 data-i18n="pay.ins.t">Seguros</h3><p data-i18n="pay.ins.p">Le entregamos factura e informe médico para que solicite el reembolso a su seguro local o internacional.</p></article>
+				<div class="wallet">
+					<div class="wallet__track" id="walletTrack" role="tablist" aria-label="Formas de pago">
+						<button type="button" class="pcard pcard--sinpe" role="tab" id="pt-sinpe" aria-controls="pp-sinpe" aria-selected="true" data-pay="sinpe">
+							<span class="pcard__top"><i class="pcard__chip"></i><svg class="ic"><use href="#i-phone"/></svg></span>
+							<span class="pcard__num" data-cfg="sinpe"></span>
+							<span class="pcard__name">SINPE Móvil</span>
+							<span class="pcard__foot">Dr. Goizueta</span>
+						</button>
+						<button type="button" class="pcard pcard--card" role="tab" id="pt-card" aria-controls="pp-card" aria-selected="false" tabindex="-1" data-pay="card">
+							<span class="pcard__top"><i class="pcard__chip"></i><svg class="ic"><use href="#i-card"/></svg></span>
+							<span class="pcard__num">•••• •••• •••• 2026</span>
+							<span class="pcard__name" data-i18n="pay.card.t">Tarjeta</span>
+							<span class="pcard__foot">Visa · Mastercard</span>
+						</button>
+						<button type="button" class="pcard pcard--cash" role="tab" id="pt-cash" aria-controls="pp-cash" aria-selected="false" tabindex="-1" data-pay="cash">
+							<span class="pcard__top"><i class="pcard__chip"></i><svg class="ic"><use href="#i-cash"/></svg></span>
+							<span class="pcard__num">₡ &nbsp;/&nbsp; US$</span>
+							<span class="pcard__name" data-i18n="pay.cash.t">Efectivo</span>
+							<span class="pcard__foot" data-i18n="pay.cash.f">En la clínica</span>
+						</button>
+						<button type="button" class="pcard pcard--bank" role="tab" id="pt-bank" aria-controls="pp-bank" aria-selected="false" tabindex="-1" data-pay="bank">
+							<span class="pcard__top"><i class="pcard__chip"></i><svg class="ic"><use href="#i-bank"/></svg></span>
+							<span class="pcard__num">CR•• •••• •••• ••••</span>
+							<span class="pcard__name" data-i18n="pay.bank.t">Transferencia</span>
+							<span class="pcard__foot">IBAN</span>
+						</button>
+						<button type="button" class="pcard pcard--ins" role="tab" id="pt-ins" aria-controls="pp-ins" aria-selected="false" tabindex="-1" data-pay="ins">
+							<span class="pcard__top"><i class="pcard__chip"></i><svg class="ic"><use href="#i-shield"/></svg></span>
+							<span class="pcard__num" data-i18n="pay.ins.n">Reembolso</span>
+							<span class="pcard__name" data-i18n="pay.ins.t">Seguros</span>
+							<span class="pcard__foot" data-i18n="pay.ins.f">Local e internacional</span>
+						</button>
+					</div>
+					<div class="wallet__nav">
+						<button type="button" class="wbtn" id="wPrev" aria-label="Anterior"><svg class="ic" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+						<div class="wdots" id="wDots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+						<button type="button" class="wbtn" id="wNext" aria-label="Siguiente"><svg class="ic" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
+					</div>
+					<div class="wallet__info">
+						<div class="pinfo" id="pp-sinpe" role="tabpanel" aria-labelledby="pt-sinpe">
+							<h3>SINPE Móvil</h3>
+							<p data-i18n="pay.sinpe">Transfiera desde la app de su banco al número:</p>
+							<div class="copy"><code id="sinpeNum" data-cfg="sinpe"></code><button type="button" class="btn btn--ghost btn--sm" id="copySinpe" data-i18n="pay.copy">Copiar</button></div>
+							<p class="muted" data-i18n="pay.sinpe2">Envíe el comprobante por WhatsApp.</p>
+						</div>
+						<div class="pinfo" id="pp-card" role="tabpanel" aria-labelledby="pt-card" hidden>
+							<h3 data-i18n="pay.card.t">Tarjeta</h3>
+							<p data-i18n="pay.card.p">Débito y crédito Visa y Mastercard en la clínica.</p>
+							<p class="muted" data-i18n="pay.card.x">Pague con datáfono al terminar la consulta; también sin contacto.</p>
+						</div>
+						<div class="pinfo" id="pp-cash" role="tabpanel" aria-labelledby="pt-cash" hidden>
+							<h3 data-i18n="pay.cash.t">Efectivo</h3>
+							<p data-i18n="pay.cash.p">Colones (₡) o dólares (US$) al tipo de cambio del día.</p>
+						</div>
+						<div class="pinfo" id="pp-bank" role="tabpanel" aria-labelledby="pt-bank" hidden>
+							<h3 data-i18n="pay.bank.t">Transferencia</h3>
+							<p data-i18n="pay.bank.p">Transferencia bancaria (IBAN). Solicite los datos de la cuenta por WhatsApp.</p>
+							<a class="btn btn--wa btn--sm" data-cfg-wa target="_blank" rel="noopener" href="#"><svg class="ic"><use href="#i-wa"/></svg><span data-i18n="pay.bank.ask">Pedir datos por WhatsApp</span></a>
+						</div>
+						<div class="pinfo" id="pp-ins" role="tabpanel" aria-labelledby="pt-ins" hidden>
+							<h3 data-i18n="pay.ins.t">Seguros</h3>
+							<p data-i18n="pay.ins.p">Le entregamos factura e informe médico para que solicite el reembolso a su seguro local o internacional.</p>
+						</div>
+					</div>
 				</div>
 				<p class="note center"><span data-i18n="pay.price">¿Desea conocer el costo de una consulta?</span> <a data-cfg-wa="price" target="_blank" rel="noopener" href="#" data-i18n="pay.ask">Consulte tarifas por WhatsApp</a></p>
 			</div>

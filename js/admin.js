@@ -19,6 +19,7 @@ const monthTitle = (d) => { const [y, m] = d.split('-').map(Number); return `${M
 const shortDate = (d) => { const [, m, dd] = d.split('-').map(Number); return `${DSHORT[dow(d)]} ${dd} ${MONTHS[m - 1].slice(0, 3)}`; };
 const longDate = (d) => { const [y, m, dd] = d.split('-').map(Number); return `${DAYS[dow(d)]} ${dd} de ${MONTHS[m - 1]} de ${y}`; };
 const active = (a) => a.status !== 'cancelled';
+const hd = (icon, tone, title) => `<h2><i class="hico hico--${tone}"><svg class="ic"><use href="#i-${icon}"/></svg></i>${title}</h2>`;
 const chip = (s) => `<span class="st st--${s}">${LABEL[s]}</span>`;
 
 let appts = [], byId = new Map(), unsub = null, known = null;
@@ -169,13 +170,13 @@ function renderDash() {
 			<div class="kpi kpi--money"><span>Cobrado en ${MONTHS[Number(month.slice(5)) - 1]}</span><strong>${money({ amount: crc, currency: 'CRC' })}</strong><small>${usd ? `+ ${money({ amount: usd, currency: 'USD' })}` : `${paidMonth.length} pago${paidMonth.length === 1 ? '' : 's'}`}</small></div>
 		</div>
 		<div class="dash">
-			<section class="card dash__today"><header><h2>Agenda de hoy</h2><button class="linkbtn" data-act="day" data-date="${today}">Ver en calendario</button></header>
+			<section class="card dash__today"><header>${hd('cal', 'blue', 'Agenda de hoy')}<button class="linkbtn" data-act="day" data-date="${today}">Ver en calendario</button></header>
 				${todays.length ? todays.map((a) => row(a)).join('') : empty('No hay citas hoy. Las solicitudes nuevas aparecerán aquí al instante.')}</section>
-			<section class="card"><header><h2>Por confirmar</h2>${pending.length ? `<span class="st st--requested">${pending.length}</span>` : ''}</header>
+			<section class="card"><header>${hd('bell', 'req', 'Por confirmar')}${pending.length ? `<span class="st st--requested">${pending.length}</span>` : ''}</header>
 				${pending.length ? pending.slice(0, 8).map((a) => row(a, { date: true, confirm: true })).join('') : empty('No hay solicitudes pendientes.')}</section>
-			<section class="card"><header><h2>Mañana</h2>${tmr.length ? '<button class="linkbtn" data-act="remind-all">Enviar recordatorios</button>' : ''}</header>
+			<section class="card"><header>${hd('right', 'teal', 'Mañana')}${tmr.length ? '<button class="linkbtn" data-act="remind-all">Enviar recordatorios</button>' : ''}</header>
 				${tmr.length ? tmr.sort((x, y) => x.time.localeCompare(y.time)).map((a) => row(a)).join('') : empty('No hay citas agendadas para mañana.')}</section>
-			<section class="card"><header><h2>Completadas sin cobrar</h2></header>
+			<section class="card"><header>${hd('cash', 'done', 'Completadas sin cobrar')}</header>
 				${unpaid.length ? unpaid.slice(0, 8).map((a) => row(a, { date: true, pay: true })).join('') : empty('Todas las consultas completadas están cobradas.')}</section>
 		</div>`;
 }
@@ -552,7 +553,7 @@ function renderPayments() {
 		</div>
 		${Object.keys(methods).length ? `<div class="methods">${Object.entries(methods).map(([k, v]) => `<div><span>${esc(k)}</span><b>${[v.CRC ? money({ amount: v.CRC, currency: 'CRC' }) : '', v.USD ? money({ amount: v.USD, currency: 'USD' }) : ''].filter(Boolean).join(' + ')}</b><small>${v.n} pago${v.n > 1 ? 's' : ''}</small></div>`).join('')}</div>` : ''}
 		<section class="card">
-			<header><h2>Pagos de ${MONTHS[m - 1]}</h2></header>
+			<header>${hd('cash', 'done', `Pagos de ${MONTHS[m - 1]}`)}</header>
 			${list.length ? `<div class="table"><table>
 				<thead><tr><th>Fecha</th><th>Paciente</th><th class="hide-sm">Servicio</th><th class="hide-sm">Forma</th><th class="num">Monto</th><th></th></tr></thead>
 				<tbody>${list.map((a) => `<tr data-act="open" data-id="${a.id}">
@@ -636,7 +637,7 @@ function renderSettings() {
 	$('#view').innerHTML = `
 		<div class="settings">
 			<section class="card">
-				<header><h2>Correos automáticos</h2><span class="st ${ej ? 'st--completed' : 'st--requested'}">${ej ? 'Activos' : 'Sin configurar'}</span></header>
+				<header>${hd('mail', 'blue', 'Correos automáticos')}<span class="st ${ej ? 'st--completed' : 'st--requested'}">${ej ? 'Activos' : 'Sin configurar'}</span></header>
 				<p>${ej ? 'Las confirmaciones, cancelaciones, recordatorios y comprobantes se envían solos por correo cuando el paciente dejó su dirección.' : 'Mientras no se configuren, el panel prepara cada mensaje y usted lo envía con un toque por WhatsApp, SMS o su aplicación de correo.'}</p>
 				${ej ? '' : `<ol class="howto">
 					<li>Cree una cuenta gratuita en <a href="https://www.emailjs.com" target="_blank" rel="noopener">emailjs.com</a> y conecte el correo de la clínica (Gmail u Outlook) en <b>Email Services</b>.</li>
@@ -645,22 +646,22 @@ function renderSettings() {
 				</ol>`}
 			</section>
 			<section class="card">
-				<header><h2>Avisos de nuevas solicitudes</h2></header>
+				<header>${hd('bell', 'req', 'Avisos de nuevas solicitudes')}</header>
 				<p>Con el panel abierto, cada solicitud nueva suena y aparece arriba a la derecha. ${perm === 'granted' ? 'Los avisos del sistema están activados.' : 'También puede recibir un aviso del sistema aunque esté en otra pestaña.'}</p>
 				${perm === 'default' ? '<button class="btn btn--sm btn--ghost" id="askNotif"><svg class="ic"><use href="#i-bell"/></svg>Activar avisos del sistema</button>' : ''}
 				${perm === 'denied' ? '<p class="muted">El navegador bloqueó los avisos. Actívelos en la configuración del sitio.</p>' : ''}
 			</section>
 			<section class="card">
-				<header><h2>Mensajes de texto (SMS)</h2></header>
+				<header>${hd('sms', 'teal', 'Mensajes de texto (SMS)')}</header>
 				<p>El botón SMS abre la aplicación de mensajes del iPhone, iPad o Android con el texto listo. El envío totalmente automático de SMS requiere un proveedor de pago (por ejemplo Twilio) y un pequeño servidor; se puede agregar más adelante.</p>
 			</section>
 			<section class="card">
-				<header><h2>Horario de citas</h2></header>
+				<header>${hd('cal', 'blue', 'Horario de citas')}</header>
 				<table class="simple">${hours}</table>
 				<p class="muted">Turnos de ${C.slotMinutes} minutos. El horario se cambia en <code>js/config.js</code>.</p>
 			</section>
 			<section class="card">
-				<header><h2>Instalar en el iPad o celular</h2></header>
+				<header>${hd('phone', 'teal', 'Instalar en el iPad o celular')}</header>
 				<p>En Safari, toque <b>Compartir</b> y luego <b>Agregar a pantalla de inicio</b>. La agenda se abrirá como una aplicación.</p>
 				<a class="btn btn--sm btn--ghost" href="index.html" target="_blank" rel="noopener">Abrir la web pública</a>
 			</section>

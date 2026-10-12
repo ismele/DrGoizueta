@@ -214,19 +214,43 @@ h1 { font-size: clamp(2.75rem, 7.5vw, 5rem); font-weight: 900; letter-spacing: -
 .sw--completed { background: var(--st-done-bg); border-color: var(--st-done); }
 .sw--cancelled { background: var(--st-can-bg); border-color: var(--st-can); }
 
-/* ---------- Payments ---------- */
-.pays { display: grid; gap: 1rem; }
-.pay { background: #fff; border: 1px solid var(--line); border-radius: var(--r); padding: 1.25rem; display: grid; grid-template-columns: auto 1fr; gap: .2rem 1rem; align-content: start; }
-.pay .ic--lg { grid-row: span 3; }
-.pay h3 { margin: .25rem 0 .2rem; }
-.pay p { margin: 0; font-size: .95rem; }
-.pay--main { background: var(--navy); border-color: var(--navy); color: #C9D6E8; }
-.pay--main h3 { color: #fff; font-size: 1.35rem; }
-.pay--main .ic--lg { background: rgba(255,255,255,.1); color: #fff; }
-.pay--main .muted { color: #9FB1C9; }
-.copy { display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; margin: .6rem 0 .4rem; }
-.copy code { font: 800 1.6rem/1 var(--display); color: #fff; letter-spacing: .03em; }
-.pay--main .btn--ghost { background: transparent; color: #fff; border-color: rgba(255,255,255,.35); }
+/* ---------- Payments: a wallet of cards ---------- */
+.wallet { --cw: min(320px, 78vw); }
+.wallet__track { display: flex; gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 16px calc(50% - var(--cw) / 2) 44px; margin-bottom: -18px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.wallet__track::-webkit-scrollbar { display: none; }
+.pcard {
+	flex: none; width: var(--cw); aspect-ratio: 1.586; scroll-snap-align: center; position: relative; overflow: hidden;
+	display: grid; grid-template-rows: auto 1fr auto auto; text-align: left; padding: 18px 20px; border: 0; border-radius: 18px; cursor: pointer;
+	color: #fff; font-family: var(--display); box-shadow: 0 10px 24px rgba(16,42,76,.22);
+	transform: scale(.9); opacity: .6; transition: transform .3s ease, opacity .3s ease, box-shadow .3s ease;
+}
+.pcard::after { content: ""; position: absolute; width: 70%; aspect-ratio: 1; right: -22%; top: -38%; border-radius: 50%; background: rgba(255,255,255,.09); pointer-events: none; }
+.pcard.is-active { transform: none; opacity: 1; box-shadow: 0 18px 40px rgba(16,42,76,.32); }
+.pcard:focus-visible { outline: 3px solid var(--teal); outline-offset: 4px; }
+.pcard__top { display: flex; justify-content: space-between; align-items: center; }
+.pcard__top .ic { width: 28px; height: 28px; opacity: .9; }
+.pcard__chip { width: 42px; height: 32px; border-radius: 6px; background: linear-gradient(135deg, #F6DFA1, #C9A24B); box-shadow: inset 0 0 0 1px rgba(0,0,0,.12); }
+.pcard__num { align-self: end; font-size: clamp(1.05rem, 4.6vw, 1.35rem); font-weight: 700; letter-spacing: .08em; margin-bottom: 6px; white-space: nowrap; }
+.pcard__name { font-size: 1.2rem; font-weight: 800; }
+.pcard__foot { font-size: .8rem; font-family: var(--body); opacity: .8; }
+.pcard--sinpe { background: linear-gradient(135deg, #1F4E8C 0%, #102A4C 100%); }
+.pcard--card { background: linear-gradient(135deg, #2A3B55 0%, #0E1A2C 100%); }
+.pcard--cash { background: linear-gradient(135deg, #2B8A8A 0%, #155454 100%); }
+.pcard--bank { background: linear-gradient(135deg, #3E6FB0 0%, #1F4E8C 100%); }
+.pcard--ins { background: linear-gradient(135deg, #1E8E5A 0%, #11583A 100%); }
+.wallet__nav { display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 1.25rem; }
+.wbtn { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: #fff; color: var(--ink); display: grid; place-items: center; cursor: pointer; }
+.wbtn:disabled { opacity: .35; cursor: default; }
+.wdots { display: flex; gap: 6px; }
+.wdots i { width: 8px; height: 8px; border-radius: 999px; background: #C9D3DF; transition: width .25s, background-color .25s; }
+.wdots i.is-on { width: 22px; background: var(--blue); }
+.wallet__info { max-width: 560px; margin: 0 auto; }
+.pinfo { background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); padding: 1.4rem 1.5rem; text-align: center; box-shadow: var(--shadow); }
+.pinfo h3 { font-size: 1.3rem; color: var(--blue); }
+.pinfo p { margin: 0 0 .6rem; }
+.pinfo p:last-child { margin-bottom: 0; }
+.copy { display: flex; align-items: center; justify-content: center; gap: .75rem; flex-wrap: wrap; margin: .5rem 0 .75rem; }
+.copy code { font: 800 1.75rem/1 var(--display); color: var(--ink); letter-spacing: .04em; }
 
 /* ---------- Location ---------- */
 .contact { list-style: none; padding: 0; margin: 0 0 1.25rem; }
@@ -274,6 +298,7 @@ h1 { font-size: clamp(2.75rem, 7.5vw, 5rem); font-weight: 900; letter-spacing: -
 
 @media (prefers-reduced-motion: reduce) {
 	html { scroll-behavior: auto; }
+	.pcard, .wdots i { transition: none; }
 	.live i { animation: none; }
 	.btn, .burger span, .faq summary::after { transition: none; }
 }
@@ -283,8 +308,6 @@ h1 { font-size: clamp(2.75rem, 7.5vw, 5rem); font-weight: 900; letter-spacing: -
 	.topbar__phone { display: inline-flex; }
 	.cta { background-image: url(../assets/tablet/image-footer.jpg); }
 	.svc { grid-template-columns: 1fr 1fr; }
-	.pays { grid-template-columns: 1fr 1fr; }
-	.pay--main { grid-column: 1 / -1; }
 	.form { padding: 2rem; }
 }
 /* ---------- iPad portrait ---------- */
@@ -306,8 +329,6 @@ h1 { font-size: clamp(2.75rem, 7.5vw, 5rem); font-weight: 900; letter-spacing: -
 	.hero__cta, .chips { justify-content: flex-start; }
 	.next { margin: 0 0 0 auto; padding: 1.75rem; }
 	.svc { grid-template-columns: repeat(3, 1fr); }
-	.pays { grid-template-columns: repeat(4, 1fr); }
-	.pay--main { grid-column: span 2; grid-row: span 2; align-content: center; }
 	.cta { background-image: url(../assets/desktop/image-footer.jpg); }
 	.cta__in { flex-direction: row; justify-content: space-between; text-align: left; }
 }

@@ -357,3 +357,15 @@ tbody tr:hover, tbody tr.is-sel { background: var(--line-2); }
 }
 .gev b, .gev span { white-space: nowrap; }
 .grid--day .gev span { overflow: hidden; text-overflow: ellipsis; }
+
+/* ---------- Section headings: blue titles with a tinted icon ---------- */
+.card > header { padding-bottom: .75rem; margin-bottom: .5rem; border-bottom: 2px solid var(--line-2); }
+.card h2 { display: flex; align-items: center; gap: .6rem; color: var(--blue); font-size: 1.08rem; }
+.hico { width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; flex: none; }
+.hico .ic { width: 18px; height: 18px; stroke-width: 2; }
+.hico--blue { background: var(--st-sch-bg); color: var(--st-sch); }
+.hico--req { background: var(--st-req-bg); color: #A86F00; }
+.hico--teal { background: var(--teal-soft); color: var(--teal-dark); }
+.hico--done { background: var(--st-done-bg); color: var(--st-done); }
+.kpi span { color: var(--blue); }
+.pdetail h2 { color: var(--blue); }

@@ -49,7 +49,7 @@ const EN = {
 	'pay.eyebrow': 'Payments', 'pay.h': 'Payment methods',
 	'pay.p': 'Payment is made on the day of your visit. We issue an electronic invoice and a receipt for your insurer.',
 	'pay.sinpe': 'Transfer from your bank app to:', 'pay.copy': 'Copy', 'pay.sinpe2': 'Send the receipt by WhatsApp.',
-	'pay.card.t': 'Card', 'pay.card.p': 'Visa and Mastercard debit and credit at the clinic.',
+	'pay.card.t': 'Card', 'pay.card.x': 'Pay by card terminal after your visit; contactless works too.', 'pay.cash.f': 'At the clinic', 'pay.bank.ask': 'Ask for details on WhatsApp', 'pay.ins.n': 'Reimbursement', 'pay.ins.f': 'Local and international', 'pay.card.p': 'Visa and Mastercard debit and credit at the clinic.',
 	'pay.cash.t': 'Cash', 'pay.cash.p': 'Colones (₡) or US dollars at the day\'s exchange rate.',
 	'pay.bank.t': 'Bank transfer', 'pay.bank.p': 'Bank transfer (IBAN). Ask for the account details on WhatsApp.',
 	'pay.ins.t': 'Insurance', 'pay.ins.p': 'We give you an invoice and medical report so you can claim reimbursement from your local or international insurer.',
@@ -250,12 +250,55 @@ function initCopy() {
 	});
 }
 
+/* ---------- Payment cards (swipe or tap to see each method) ---------- */
+function initWallet() {
+	const track = $('#walletTrack');
+	if (!track) return;
+	const cards = $$('.pcard', track), dots = $$('#wDots i');
+	let idx = 0, t = null, lock = false;
+	const select = (i, scroll) => {
+		idx = Math.max(0, Math.min(cards.length - 1, i));
+		cards.forEach((c, k) => {
+			const on = k === idx;
+			c.setAttribute('aria-selected', String(on)); c.tabIndex = on ? 0 : -1;
+			c.classList.toggle('is-active', on);
+			$('#' + c.getAttribute('aria-controls')).hidden = !on;
+			if (dots[k]) dots[k].classList.toggle('is-on', on);
+		});
+		$('#wPrev').disabled = idx === 0; $('#wNext').disabled = idx === cards.length - 1;
+		if (scroll) {
+			lock = true;
+			const c = cards[idx];
+			track.scrollTo({ left: c.offsetLeft - (track.clientWidth - c.offsetWidth) / 2, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+			setTimeout(() => (lock = false), 500);
+		}
+	};
+	cards.forEach((c, k) => c.addEventListener('click', () => select(k, true)));
+	track.addEventListener('keydown', (e) => {
+		if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); select(idx + (e.key === 'ArrowRight' ? 1 : -1), true); cards[idx].focus(); }
+	});
+	track.addEventListener('scroll', () => {
+		if (lock) return;
+		clearTimeout(t);
+		t = setTimeout(() => {
+			const mid = track.scrollLeft + track.clientWidth / 2;
+			let best = 0, d = Infinity;
+			cards.forEach((c, k) => { const dd = Math.abs(c.offsetLeft + c.offsetWidth / 2 - mid); if (dd < d) { d = dd; best = k; } });
+			if (best !== idx) select(best, false);
+		}, 90);
+	}, { passive: true });
+	$('#wPrev').addEventListener('click', () => select(idx - 1, true));
+	$('#wNext').addEventListener('click', () => select(idx + 1, true));
+	select(0, false);
+}
+
 /* ---------- Start ---------- */
 document.addEventListener('DOMContentLoaded', () => {
 	fillConfig();
 	initNav();
 	initForm();
 	initCopy();
+	initWallet();
 	$$('.lang__btn').forEach((b) => b.addEventListener('click', () => setLang(b.dataset.lang)));
 	let saved = null;
 	try { saved = localStorage.getItem('lang'); } catch (e) { /* ignore */ }
